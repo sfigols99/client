@@ -1,7 +1,7 @@
 {
   "homepage": "https://sfigols99.github.io/client",
-  "name": "grmnt",
-  "private": true,
+  "name": "client",
+  "private": false,
   "version": "0.0.0",
   "scripts": {
     "predeploy": "npm run build",
