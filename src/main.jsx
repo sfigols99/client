@@ -5,7 +5,7 @@ import {App, Tenants, Landlords, GRMNTs} from './pages';
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter basename="/grmnt">
+  <BrowserRouter basename="/client">
     <React.StrictMode>
       <Routes>
         <Route path="/" element={<App />} />
