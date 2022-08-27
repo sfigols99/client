@@ -1,7 +1,6 @@
 import { set_persona_fisica } from "../utils/Persona_Fisica";
 import { useState } from "react";
-import FormInput from './FormInput';
-import Button from "./Button";
+import { FormInput, Button } from './subcomponents/subcomponents';
 
 const FormPersonaFisica = (props) => {
     const [values, setValues] = useState({

@@ -1,20 +1,19 @@
-import './App.css';
-import { Navbar, Footer, Rents } from './components';
+import { Navbar, Footer } from './components';
 
-const GRMNTs = () => {
+const MyOffers = () => {
     return(
-        <div className='bg-black text-white'>
+        <div>
             <div className='flex-initial justify-center items-center '>
                 <Navbar />
             </div>
             <div>
-                <Rents/>
+                <h1>Main</h1>
             </div>
             <div>
                 <Footer/>
             </div>
         </div>
-    )
+    );
 }
 
-export default GRMNTs;
+export default MyOffers;

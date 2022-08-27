@@ -1,14 +1,13 @@
-import './App.css';
-import { Footer, Navbar, LandlordOffers } from './components';
+import { Navbar, TenantOffers, Footer } from './components';
 
-const Landlords = () => {
+const Tenants = () => {
     return(
         <div className='bg-black text-white'>
             <div className='flex-initial justify-center items-center '>
                 <Navbar />
             </div>
             <div>
-                <LandlordOffers/>
+                <TenantOffers/>
             </div>
             <div>
                 <Footer/>
@@ -17,4 +16,4 @@ const Landlords = () => {
     )
 }
 
-export default Landlords;
+export default Tenants;

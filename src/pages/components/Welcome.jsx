@@ -1,7 +1,8 @@
 import React from 'react';
 import { load } from '../utils/funcs';
-import Button from './Button';
+import { Button } from './subcomponents/subcomponents';
 import Login from './Login';
+import No_Metamask from './No_Metamask';
 import { useState } from "react";
 
 /* ------ APIS dels contractes ------ */
@@ -15,10 +16,15 @@ const Welcome = () => {
     const [defaultAccount, setDefaultAccount] = useState("");
     const [connButtonText, setConnButtonText] = useState("Connect Wallet");
     const [userAdded, setUserAdded] = useState(true);
+    const [metamaskExists, setMetamaskExists] = useState(true);
     /* ------------------------------------------------- */
  
     const connect_wallet = async () => {
         const account = await load();
+        setMetamaskExists(true);
+        if(account === "No_Metamask") {
+            setMetamaskExists(false);
+        }
         if ( await pf_exists(account) == true ) {
             setUserAdded(true);
             setConnButtonText("GRMNT'ED!");
@@ -43,22 +49,20 @@ const Welcome = () => {
                     </a>
                 </h1>
             </div>
-            <Button 
-                onClick={connect_wallet} 
-                connButtonText={connButtonText}
-                icon = {
-                    <span className="flex items-center space-x-5 pr-4">   {/* Comentar d'on surt aquest logo */}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-orange-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clipRule="evenodd" />
-                        </svg>
-                    </span>
-                }
-                genericClass="p-16 grid gap-8 items-start justify-center"  
-            />
+            <div className='flex items-center justify-center py-20'>
+                <Button 
+                    onClick={connect_wallet} 
+                    text={"Connect Wallet"}
+                />
+            </div>
+            
             <div className=''>
                 <h3 className='text-center'>
                     {defaultAccount}
                 </h3>
+                <div>
+                    <No_Metamask trigger={metamaskExists}/>
+                </div>
                 <div>
                     <Login trigger={userAdded} account={defaultAccount}/>
                 </div>

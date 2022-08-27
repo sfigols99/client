@@ -1,3 +1,5 @@
+import { Button } from './subcomponents/subcomponents';
+
 const OfferItems = (props) => {
     
     const request_offer = () => {
@@ -17,9 +19,7 @@ const OfferItems = (props) => {
                 </div>
             </div>
             <div className="flex justify-end items-end px-24 p-2">
-                <button className="py-2 px-6 border-2 bg-white rounded transition-colors duration-1000 text-black hover:text-white hover:bg-black " onClick={request_offer}>
-                    Request
-                </button>
+                <Button onClick={request_offer} text={"Request"}/>
             </div>
         </li>
     )

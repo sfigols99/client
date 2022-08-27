@@ -1,4 +1,3 @@
-import logo from '../../images/logo.png';
 import { Link } from 'react-router-dom';
 
 const NavbarItem = (props) => {
@@ -17,6 +16,7 @@ const Navbar = () => {
         {id: 2, name: "Tenants", path:'/tenants'},
         {id: 3, name: "GRMNT's", path:'/grmnts'},
         {id: 4, name: "My GRMNT's", path:'/grmnts'}, 
+        {id: 5, name: "My Offers", path:'/my_offers'}
     ];
 
     return (

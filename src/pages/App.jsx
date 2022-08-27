@@ -1,4 +1,3 @@
-import './App.css';
 import { Welcome, Footer, Navbar, Our_Project } from './components/index';
 
 const FirstPage = () => {
@@ -14,7 +13,7 @@ const FirstPage = () => {
   );
 }
 
-function App() {
+const App = () => {
   return (
     <div className='bg-black text-white'>
       <div className='flex-initial justify-center items-center '>

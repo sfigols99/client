@@ -1,4 +1,3 @@
-import { checkProperties } from "ethers/lib/utils";
 import OfferItems from "./OfferItems";
 
 const TenantOffers = () => {

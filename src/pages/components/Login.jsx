@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FormPersonaFisica from "./FormPersonaFisica";
 import FormPersonaJuridica from "./FormPersonaJuridica";
-import Button from "./Button";
+import { Button } from './subcomponents/subcomponents';
 
 const Login = (props) => {  // Si és la primera vegada que apreta el botó de login 
     const [userType, setUserType] = useState(true);
