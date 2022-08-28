@@ -6,22 +6,14 @@ Aqui tractem la interacció amb el contracte de Persones Fisiques
 
 import { ethers } from "ethers";
 
-/*
-const ropsten_url = "https://ropsten.infura.io/v3/5c5bc273c7174ef084925827045b70f2";
-    Això està malament -> es metamask el que interactua amb el contracte, no infura. Infura es un proveidor
-    que ajuda a penjar els contractes a blockchain, seguidament fem el procediment d'etherscan per donar-lo
-    d'alta    
-*/
-
 let signer;
 
 try {
     const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
+    signer = provider.getSigner();
 } catch (error) {
     console.log(error.reason);
 }
-
 
 const abi = [
     "function set_persona_fisica(address _address, string _dni, string _nom, string _adreca, string _correu)",

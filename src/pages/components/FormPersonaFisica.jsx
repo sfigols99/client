@@ -1,4 +1,4 @@
-import { set_persona_fisica } from "../utils/Persona_Fisica";
+import { set_persona_fisica } from "../utils/Rent";
 import { useState } from "react";
 import { FormInput, Button } from './subcomponents/subcomponents';
 
@@ -83,12 +83,13 @@ const FormPersonaFisica = (props) => {
             <form onSubmit={add_persona_fisica}>
                 {
                     pf_inputs.map((input) => (
-                        <FormInput key={input.id} name={input.name} label={input.label} placeholder={input.placeholder} disabled={input.disabled} value={input.value} onChange={onChange}/>
+                        <FormInput key={input.id} name={input.name} label={input.label} placeholder={input.placeholder} disabled={input.disabled} value={input.value} onChange={onChange} errormessages={input.errormessages}/>
                     ))
                 }
-                <Button connButtonText="Start" genericClass="p-4 grid gap-8 items-start justify-center" onClick={add_persona_fisica}/>
+                <div className="p-4 flex items-center justify-center">
+                    <Button text="Start" onClick={add_persona_fisica}/>
+                </div>                
             </form>
-            
         </div>
     );
 }

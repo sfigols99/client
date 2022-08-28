@@ -5,8 +5,8 @@ const FormInput = (props) => {
     return(
         <div className="block py-3">
             <label className="block py-2">{props.label}</label>
-            <input name={props.name} type={props.text} placeholder={props.placeholder} disabled={props.disabled} className={label_classes} value={props.value} onChange={props.onChange} required={props.required} errorMessages={props.errorMessages}/>
-            <span>{props.errorMessages}</span>
+            <input name={props.name} type={props.text} placeholder={props.placeholder} disabled={props.disabled} className={label_classes} value={props.value} onChange={props.onChange} required={props.required} errormessages={props.errormessages}/>
+            <span>{props.errormessages}</span>
         </div>
     );
 }

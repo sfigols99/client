@@ -6,7 +6,7 @@ import No_Metamask from './No_Metamask';
 import { useState } from "react";
 
 /* ------ APIS dels contractes ------ */
-import { /*set_persona_fisica, up_dni, up_correu, up_pf_adreca, up_nom, get_pfisica, get_pfisiques, pf_all_addresses, */ pf_exists /*, del_pf */ } from '../utils/Persona_Fisica';
+import { is_persona_fisica, is_persona_juridica } from '../utils/Rent';
 /* --------------------------------- */
 
 const Welcome = () => {
@@ -25,7 +25,7 @@ const Welcome = () => {
         if(account === "No_Metamask") {
             setMetamaskExists(false);
         }
-        if ( await pf_exists(account) == true ) {
+        else if (await is_persona_fisica() || await is_persona_juridica()) {
             setUserAdded(true);
             setConnButtonText("GRMNT'ED!");
             console.log("It is added");

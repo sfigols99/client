@@ -1,4 +1,4 @@
-import {set_persona_juridica} from '../utils/Persona_Juridica';
+import {set_persona_juridica} from '../utils/Rent';
 import { useState } from "react";
 import { FormInput, Button } from './subcomponents/subcomponents';
 
@@ -100,10 +100,13 @@ const FormPersonaJuridica = (props) => {
                         placeholder={input.placeholder} 
                         value={input.value} 
                         onChange={onChange}
+                        errormessages={input.errormessages}
                     />
                 )) 
             }
-            <Button connButtonText="Start" genericClass="p-4 grid gap-8 items-start justify-center" onClick={add_persona_juridica}/> 
+            <div className="p-4 flex items-center justify-center">
+                <Button text="Start" onClick={add_persona_juridica}/>
+            </div>        
         </form>
     );
 }
