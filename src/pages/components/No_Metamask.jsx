@@ -15,6 +15,9 @@ const No_Metamask = (props) => {
                         </div>
                     </a>
                 </p>
+                <p>
+                    It is used for signing and verifying transactions.
+                </p>
             </div>
         </div>
     );

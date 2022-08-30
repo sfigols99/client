@@ -4,6 +4,7 @@ import { Button } from './subcomponents/subcomponents';
 import Login from './Login';
 import No_Metamask from './No_Metamask';
 import { useState } from "react";
+import Add_Offer from './Add_Offer';
 
 /* ------ APIS dels contractes ------ */
 import { is_persona_fisica, is_persona_juridica } from '../utils/Rent';
@@ -17,6 +18,7 @@ const Welcome = () => {
     const [connButtonText, setConnButtonText] = useState("Connect Wallet");
     const [userAdded, setUserAdded] = useState(true);
     const [metamaskExists, setMetamaskExists] = useState(true);
+    const [offer, setOffer] = useState(true);
     /* ------------------------------------------------- */
  
     const connect_wallet = async () => {
@@ -25,7 +27,7 @@ const Welcome = () => {
         if(account === "No_Metamask") {
             setMetamaskExists(false);
         }
-        else if (await is_persona_fisica() || await is_persona_juridica()) {
+        else if (await is_persona_fisica(account) || await is_persona_juridica(account)) {
             setUserAdded(true);
             setConnButtonText("GRMNT'ED!");
             console.log("It is added");
@@ -37,6 +39,10 @@ const Welcome = () => {
             console.log("It is not added");
         }
         setDefaultAccount(account);
+    }
+
+    const manage_offer = async () => {
+        setOffer(false);
     }
  
     return (
@@ -55,6 +61,12 @@ const Welcome = () => {
                     text={"Connect Wallet"}
                 />
             </div>
+            <div  className='flex items-center justify-center py-20'>
+                <Button
+                    onClick={manage_offer}
+                    text={"Add Offer"}
+                />
+            </div>
             
             <div className=''>
                 <h3 className='text-center'>
@@ -65,6 +77,9 @@ const Welcome = () => {
                 </div>
                 <div>
                     <Login trigger={userAdded} account={defaultAccount}/>
+                </div>
+                <div>
+                    <Add_Offer trigger={offer}/>
                 </div>
             </div>
             <div className="py-32 items-center justify-center">
