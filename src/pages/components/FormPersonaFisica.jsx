@@ -1,4 +1,4 @@
-import { set_persona_fisica } from "../utils/Rent";
+import { set_persona_fisica } from "../utils/Persona_Fisica";
 import { useState } from "react";
 import { FormInput, Button } from './subcomponents/subcomponents';
 

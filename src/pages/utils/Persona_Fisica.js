@@ -1,23 +1,23 @@
 import { contract_instance } from "./config";
 
-export const set_persona_fisica = (address, dni, nom, adreca, correu) => {
-    contract_instance.set_persona_fisica(address, dni, nom, adreca, correu);
+export const set_persona_fisica = (dni, nom, adreca, correu) => {
+    contract_instance.set_persona_fisica(dni, nom, adreca, correu);
     console.log("Added");
 }
 
-export const up_dni = (address, dni) => {
-    contract_instance.up_dni(address, dni);
+export const up_dni = (dni) => {
+    contract_instance.up_dni(dni);
 }
 
-export const up_nom = (address, nom) => {
-    contract_instance.set_nom(address, nom);
+export const up_nom = (nom) => {
+    contract_instance.set_nom(nom);
 }
 
-export const up_pf_adreca = (address, adreca) => {
-    contract_instance.up_adreca(address, adreca);
+export const up_pf_adreca = (adreca) => {
+    contract_instance.up_adreca(adreca);
 }
 
-export const up_correu = (address, correu) => {
+export const up_correu = (correu) => {
     contract_instance.set_correu(address, correu);
 }
 
@@ -43,4 +43,9 @@ export const pf_exists = async(address) => {
 
 export const del_pf = (address) => {
     contract_instance.del_address(address);
+}
+
+export const is_persona_fisica = async(account) => {
+    const user_in_db = await contract_instance.is_persona_fisica(account);
+    return(user_in_db);
 }

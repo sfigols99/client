@@ -1,4 +1,4 @@
-import {set_persona_juridica} from '../utils/Rent';
+import {set_persona_juridica} from '../utils/Persona_Juridica';
 import { useState } from "react";
 import { FormInput, Button } from './subcomponents/subcomponents';
 

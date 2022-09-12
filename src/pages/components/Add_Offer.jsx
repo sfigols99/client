@@ -4,7 +4,7 @@ import { FormInput, Button } from "./subcomponents/subcomponents";
 
 const Offer_Form = (props) => {
     const [values, setValues] = useState({
-        is_landlord: "",
+        is_tenant: "",
         amount: "",
         frequency: "",
         extension: "",
@@ -14,17 +14,17 @@ const Offer_Form = (props) => {
     
     const add_offer = (e) => {
         e.preventDefault();
-        new_offer(values.is_landlord, parseInt(values.amount), parseInt(values.frequency), parseInt(values.extension), parseInt(values.contract_duration), parseInt(values.surety));
+        new_offer(values.is_tenant, parseInt(values.amount), parseInt(values.frequency), parseInt(values.extension), parseInt(values.contract_duration), parseInt(values.surety));
     }
 
     const offer_inputs = [
         {
             id:1,
-            name:"is_landlord",
+            name:"is_tenant",
             type:"checkbox",
             placeholder:"",
-            label:"Landlord",
-            value:""
+            label:"Tenant",
+            value:false
         },
         {
             id:2,
@@ -82,12 +82,19 @@ const Offer_Form = (props) => {
         }
     ];
     
+
     const onChange = (e) => {
-        console.log(values);
-        setValues({
-            ...values,
-            [e.target.name]: e.target.value
-        });
+        if(e.target.type === "checkbox") {
+            setValues({
+                ...values,
+                [e.target.name]: !e.target.checked
+            });            
+        } else {
+            setValues({
+                ...values,
+                [e.target.name]: e.target.value
+            });
+        }
     }
 
     return (

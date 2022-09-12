@@ -1,5 +1,5 @@
 import React from 'react';
-import { load } from '../utils/funcs';
+import { load } from '../utils/MetaMask';
 import { Button } from './subcomponents/subcomponents';
 import Login from './Login';
 import No_Metamask from './No_Metamask';
@@ -7,7 +7,8 @@ import { useState } from "react";
 import Add_Offer from './Add_Offer';
 
 /* ------ APIS dels contractes ------ */
-import { is_persona_fisica, is_persona_juridica } from '../utils/Rent';
+import { is_persona_fisica } from '../utils/Persona_Fisica';
+import { is_persona_juridica } from '../utils/Persona_Juridica';
 /* --------------------------------- */
 
 const Welcome = () => {

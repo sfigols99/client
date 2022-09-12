@@ -1,30 +1,30 @@
 import { contract_instance } from "./config";
 
-export const set_persona_juridica = (address, nif, den_social, adreca, dades_constitucio, apoderat) => {
-    contract_instance.set_persona_juridica(address, nif, den_social, adreca, dades_constitucio, apoderat);
+export const set_persona_juridica = (nif, den_social, adreca, dades_constitucio, apoderat) => {
+    contract_instance.set_persona_juridica(nif, den_social, adreca, dades_constitucio, apoderat);
 }
 
-export const up_nif = (address, nif) => {
-    contract_instance.up_nif(address, nif);
+export const up_nif = (nif) => {
+    contract_instance.up_nif(nif);
 }
 
-export const up_den_social = (address, den_social) => {
-    contract_instance.up_den_social(address, den_social);
+export const up_den_social = (den_social) => {
+    contract_instance.up_den_social(den_social);
 }
 
-export const up_pj_adreca = (address, adreca) => {
-    contract_instance.up_adreca(address, adreca);
+export const up_pj_adreca = (adreca) => {
+    contract_instance.up_adreca(adreca);
 }
 
-export const up_dades_constitucio = (address, dades_constitucio) => {
-    contract_instance.up_dades_constitucio(address, dades_constitucio);
+export const up_dades_constitucio = (dades_constitucio) => {
+    contract_instance.up_dades_constitucio(dades_constitucio);
 }
 
-export const up_apoderat = (address, apoderat) => {
-    contract_instance.up_apoderat(address, apoderat)
+export const up_apoderat = (apoderat) => {
+    contract_instance.up_apoderat(apoderat)
 }
 
-export const get_pjuridica = async () => {
+export const get_pjuridica = async (address) => {
     const user = contract_instance.get_pjuridica(address);
     return(user);
 }
@@ -46,4 +46,9 @@ export const pj_exists = async () => {
 
 export const del_pj = () => {
     contract_instance.del_address(address);
+}
+
+export const is_persona_juridica = async(account) => {
+    const user_in_db = await contract_instance.is_persona_juridica(account);
+    return(user_in_db);
 }

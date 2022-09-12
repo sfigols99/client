@@ -1,17 +1,27 @@
 import { Button } from './subcomponents/subcomponents';
+import { pick_offer } from '../utils/Offer'; 
+import { load } from '../utils/MetaMask';
+import { Link } from 'react-router-dom';
 
 const OfferItems = (props) => {
     
-    const request_offer = () => {
-        // cridem a l'api de contracte
+    const request_offer = (id_offer) => {
+        console.log(id_offer);
+
+        const account = load();
+        console.log(account);
+        
+        pick_offer(id_offer);
     }
     
     return(
         <li className="py-4 border-t last:border-b">
             <div className="px-2">
                 <div className="flow-root">
-                    <h1 className="flex text-xl float-left">{props.address}</h1>
-                    <span className="px-8 float-right">{props.comments}</span>  
+                    <Link to="/requests">
+                        <h1 className="flex text-xl float-left">{props.address}</h1>
+                    </Link>
+                    {/* <span className="px-8 float-right">{props.comments}</span>   */}
                 </div>
                 <div className="p-2">
                     <h3>Quantity: {props.amount} ETH</h3>
@@ -19,7 +29,7 @@ const OfferItems = (props) => {
                 </div>
             </div>
             <div className="flex justify-end items-end px-24 p-2">
-                <Button onClick={request_offer} text={"Request"}/>
+                <Button onClick={() => request_offer(props.id_offer)} text={"Request"}/>
             </div>
         </li>
     )
