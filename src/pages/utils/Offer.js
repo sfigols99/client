@@ -71,14 +71,15 @@ export const get_requests = async(id_offer) => {
         const aux_req = await get_request(i);
         
         if(aux_req["1"].toNumber() === id_offer) {
-            requestants.push(aux_req["0"]);
+            requestants.push({address: aux_req["0"]});
         }
     }
     console.log(requestants)
+    return(requestants);
 }
 
-const get_request = async() => {
-    const request = await contract_instance.get_request(0);
+const get_request = async(i) => {
+    const request = await contract_instance.get_request(i);
     return(request);
 }
 
