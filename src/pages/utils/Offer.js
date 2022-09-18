@@ -1,4 +1,5 @@
 import {contract_instance} from './config';
+import { load } from './MetaMask';
 
 export const new_offer = async(is_landlord, amount, frequency, extension, contract_instance_duration, surety)  => {
     await contract_instance.new_offer(is_landlord, amount, frequency, extension, contract_instance_duration, surety);
@@ -22,8 +23,10 @@ export const get_offers = async(display_tenant) => {
     
     const offers = []
 
+    let aux_offer;
+
     for(let i = 0; i < count_offers; i++) {
-        const aux_offer = await get_offer(i);
+        aux_offer = await get_offer(i);
 
         if (display_tenant === true) {
             if (aux_offer["1"] === true) {
@@ -67,14 +70,18 @@ export const get_requests = async(id_offer) => {
     
     let requestants = [];
 
-    for (let i = 0; i <= length; i++) {
-        const aux_req = await get_request(i);
+    let aux_req;
+
+    for (let i = 0; i < length; i++) {
+        aux_req = await get_request(i);
         
         if(aux_req["1"].toNumber() === id_offer) {
-            requestants.push({address: aux_req["0"]});
+            requestants.push({
+                id_request: i,
+                address: aux_req["0"]
+            });
         }
     }
-    console.log(requestants)
     return(requestants);
 }
 
@@ -86,4 +93,33 @@ const get_request = async(i) => {
 const get_request_count = async() => {
     const requests = await contract_instance.request_count();
     return(requests.toNumber());
+}
+
+export const get_user_offers = async(user_id) => {
+    const count_offers = await get_count_offers();
+    
+    const address = load();
+
+    const offers = []
+
+    let aux_offer;
+
+    for(let i = 0; i < count_offers; i++) {
+        
+        aux_offer = await get_offer(i);
+
+        if(address === aux_offer["1"]) {
+            offers.push({
+                id_offer: i,
+                address: aux_offer["0"],
+                is_tenant: aux_offer["1"],
+                amount: aux_offer["2"].toNumber(),
+                frequency: aux_offer["3"].toNumber(),
+                extension: aux_offer["4"].toNumber(),
+                contract_duration: aux_offer["5"].toNumber(),
+                surety: aux_offer["7"].toNumber(),
+            });
+        }
+    }
+    return(offers);
 }

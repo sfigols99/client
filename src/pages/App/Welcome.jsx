@@ -1,10 +1,8 @@
-import React from 'react';
 import { load } from '../utils/MetaMask';
-import { Button } from './subcomponents/subcomponents';
-import Login from './Login';
-import No_Metamask from './No_Metamask';
+import { Button, NoMetamask } from '../components/components';
+import { Login } from '../Login/login';
 import { useState } from "react";
-import Add_Offer from './Add_Offer';
+import { AddOffer } from '../Offers/offers';
 
 /* ------ APIS dels contractes ------ */
 import { is_persona_fisica } from '../utils/Persona_Fisica';
@@ -74,13 +72,13 @@ const Welcome = () => {
                     {defaultAccount}
                 </h3>
                 <div>
-                    <No_Metamask trigger={metamaskExists}/>
+                    <NoMetamask trigger={metamaskExists}/>
                 </div>
                 <div>
                     <Login trigger={userAdded} account={defaultAccount}/>
                 </div>
                 <div>
-                    <Add_Offer trigger={offer}/>
+                    <AddOffer trigger={offer}/>
                 </div>
             </div>
             <div className="py-32 items-center justify-center">

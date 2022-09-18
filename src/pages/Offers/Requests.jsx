@@ -1,0 +1,45 @@
+import { useState, useEffect } from "react";
+import { accept_rent_request, get_requests } from "../utils/Offer";
+import { Button, Navbar } from "../components/components";
+
+const Requests = () => {
+
+    const [requests, setRequests] = useState([]);
+
+    const handle_requests = () => {
+        get_requests(0)
+            .then(request_items => setRequests(request_items)
+        )   
+    }
+
+    const handle_accept_request = (id) => {
+        accept_rent_request(id);
+    }
+    
+    useEffect(() => {
+        handle_requests();
+    }, []);
+
+    return(
+        <div>
+            <div>
+                <Navbar/>
+            </div>
+            <h1 className="py-6 text-center text-3xl" >Requests</h1>
+            <ul className="px-24 py-8">
+                {
+                    requests && requests.map((item, index) => (
+                        <li key={index} className="flex justify-between p-4 border-t last:border-b">
+                            {item.address}
+                            <div>
+                                <Button text="Accept Request" onClick={() => handle_accept_request(item.id_request)}/>
+                            </div>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    )
+}
+
+export default Requests;

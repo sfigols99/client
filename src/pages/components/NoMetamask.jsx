@@ -1,6 +1,6 @@
-import Button from "./subcomponents/Button";
+import { Button } from "../components/components";
 
-const No_Metamask = (props) => {
+const NoMetamask = (props) => {
     return (props.trigger) ?
     ""
         :
@@ -23,4 +23,4 @@ const No_Metamask = (props) => {
     );
 }
 
-export default No_Metamask;
+export default NoMetamask;

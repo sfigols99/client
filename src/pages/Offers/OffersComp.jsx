@@ -2,12 +2,12 @@ import OfferItems from "./OfferItems";
 import { get_offers } from "../utils/Offer";
 import { useState, useEffect } from "react";
 
-const TenantOffers = () => {
+const OffersComp = (props) => {
 
     const [offers, setOffers] = useState([]);
 
     const handle_offers = () => {
-        get_offers(true)
+        get_offers(props.is_tenant)
             .then(offer_items => setOffers(offer_items))
     }
 
@@ -17,7 +17,14 @@ const TenantOffers = () => {
 
     return(
         <div>
-            <h1 className="py-6 text-center text-3xl">Tenant Offers</h1>
+            <h1 className="py-6 text-center text-3xl">
+                {
+                    (props.is_tenant) ?
+                        <span>Tenant Offers</span>
+                    :
+                        <span>Landlord Offers</span>
+                }             
+            </h1>
             <ul className="px-24 py-8">
                 {
                     offers.map((item) => (
@@ -29,4 +36,4 @@ const TenantOffers = () => {
     );
 }
 
-export default TenantOffers;
+export default OffersComp;

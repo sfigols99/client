@@ -1,4 +1,5 @@
-import { Welcome, Footer, Navbar, Our_Project } from './components/index';
+import { Footer, Navbar } from '../components/components';
+import { Welcome, OurProject } from './app';
 
 const FirstPage = () => {
   return(
@@ -7,7 +8,7 @@ const FirstPage = () => {
         <Welcome />
       </div>
       <div className='bg-black text-white'>
-        <Our_Project />
+        <OurProject />
       </div>
     </div>
   );

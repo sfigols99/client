@@ -1,13 +1,14 @@
-import { Footer, Navbar, LandlordOffers } from './components';
+import { Navbar, Footer } from '../components/components';
+import { Rents } from "../GRMNTs/grmnts";
 
-const Landlords = () => {
+const GRMNTs = () => {
     return(
         <div className='bg-black text-white'>
             <div className='flex-initial justify-center items-center '>
                 <Navbar />
             </div>
             <div>
-                <LandlordOffers/>
+                <Rents/>
             </div>
             <div>
                 <Footer/>
@@ -16,4 +17,4 @@ const Landlords = () => {
     )
 }
 
-export default Landlords;
+export default GRMNTs;

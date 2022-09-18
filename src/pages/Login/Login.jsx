@@ -1,7 +1,6 @@
 import { useState } from "react";
-import FormPersonaFisica from "./FormPersonaFisica";
-import FormPersonaJuridica from "./FormPersonaJuridica";
-import { Button } from './subcomponents/subcomponents';
+import { AddPersona } from "./login";
+import { Button } from '../components/components';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const Login = (props) => {  // Si és la primera vegada que apreta el botó de login 
@@ -30,8 +29,8 @@ const Login = (props) => {  // Si és la primera vegada que apreta el botó de l
                 <h2 className="text-xl p-2">
                     If you want to start at GRMNT, write your information below...
                 </h2>
-                { 
-                    (userType) ? <FormPersonaFisica account={props.account}/> : <FormPersonaJuridica account={props.account}/> 
+                {
+                    <AddPersona is_persona_fisica={userType} account={props.account}/>
                 }
             </div>
         </div>

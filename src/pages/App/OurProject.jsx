@@ -1,4 +1,4 @@
-const Our_Project = () => {
+const OurProject = () => {
     return(
         <div className="px-32 justify-center">
             <div className="flex py-4 px-12 text-5xl">
@@ -43,4 +43,4 @@ const Our_Project = () => {
     )
 }
 
-export default Our_Project;
+export default OurProject;

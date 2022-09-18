@@ -1,6 +1,6 @@
 import { new_offer } from "../utils/Offer";
 import { useState } from "react";
-import { FormInput, Button } from "./subcomponents/subcomponents";
+import { FormInput, Button } from "../components/components";
 
 const Offer_Form = (props) => {
     const [values, setValues] = useState({
@@ -121,7 +121,7 @@ const Offer_Form = (props) => {
     );
 }
 
-const Add_Offer = (props) => {  // Si és la primera vegada que apreta el botó de login 
+const AddOffer = (props) => {  // Si és la primera vegada que apreta el botó de login 
     //const [userIn, setUserIn] = useState(true);
 
     return (props.trigger) ? 
@@ -136,4 +136,4 @@ const Add_Offer = (props) => {  // Si és la primera vegada que apreta el botó 
     );
 }
 
-export default Add_Offer;
+export default AddOffer;

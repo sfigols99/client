@@ -1,19 +1,35 @@
 import {contract_instance} from "./config";
 
-// export const is_persona_fisica = async(account) => {
-//     const user_in_db = await contract_instance.is_persona_fisica(account);
-//     return(user_in_db);
-// }
+const get_rent = async(id) => {
+    const rent = await contract_instance.get_rent(id);
+    return(rent);
+}
 
-// export const is_persona_juridica = async(account) => {
-//     const user_in_db = await contract_instance.is_persona_juridica(account);
-//     return(user_in_db);
-// }
+const get_rent_count = async() => {
+    const rent_count = await contract_instance.rent_count();
+    return(rent_count.toNumber());
+}
 
-// export const set_persona_fisica = (dni, nom, adreca, correu) => {
-//     contract_instance.set_persona_fisica(dni, nom, adreca, correu);
-// }
+export const get_rents = async() => {
+    const rent_count = await get_rent_count();
+        
+    const rents = [];
 
-// export const set_persona_juridica = (nif, den_social, adreca, dades_constitucio, apoderat) => {
-//     contract_instance.set_persona_juridica(nif, den_social, adreca, dades_constitucio, apoderat);
-// }
+    let aux_rent;
+    for (let i = 0; i < rent_count; i++) {
+        aux_rent = await get_rent(i);
+        rents.push({
+            id_rent: i,
+            tenant: aux_rent["0"],
+            landlord: aux_rent["1"],
+            frequency: aux_rent["2"].toNumber(),
+            last_payment: aux_rent["3"].toNumber(),
+            contract_end: aux_rent["4"].toNumber(),
+            amount: aux_rent["5"].toNumber(),
+            extension: aux_rent["7"].toNumber(),
+            surety: aux_rent["9"].toNumber(),
+        })
+    }
+
+    return(rents);
+}

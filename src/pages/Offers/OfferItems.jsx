@@ -1,16 +1,10 @@
-import { Button } from './subcomponents/subcomponents';
+import { Button } from '../components/components';
 import { pick_offer } from '../utils/Offer'; 
-import { load } from '../utils/MetaMask';
 import { Link } from 'react-router-dom';
 
 const OfferItems = (props) => {
     
-    const request_offer = (id_offer) => {
-        console.log(id_offer);
-
-        const account = load();
-        console.log(account);
-        
+    const request_offer = (id_offer) => {        
         pick_offer(id_offer);
     }
     
