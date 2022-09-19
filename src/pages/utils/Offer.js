@@ -1,4 +1,4 @@
-import {contract_instance} from './config';
+import { contract_instance } from './config';
 import { load } from './MetaMask';
 
 export const new_offer = async(is_landlord, amount, frequency, extension, contract_instance_duration, surety)  => {
@@ -6,6 +6,7 @@ export const new_offer = async(is_landlord, amount, frequency, extension, contra
 }
 
 export const pick_offer = async(offer_id) => {
+    //console.log(offer_id);
     await contract_instance.pick_offer(offer_id);
 }
 
@@ -28,35 +29,37 @@ export const get_offers = async(display_tenant) => {
     for(let i = 0; i < count_offers; i++) {
         aux_offer = await get_offer(i);
 
-        if (display_tenant === true) {
-            if (aux_offer["1"] === true) {
-                offers.push({
-                    id_offer: i,
-                    address: aux_offer["0"],
-                    is_tenant: aux_offer["1"],
-                    amount: aux_offer["2"].toNumber(),
-                    frequency: aux_offer["3"].toNumber(),
-                    extension: aux_offer["4"].toNumber(),
-                    contract_duration: aux_offer["5"].toNumber(),
-                    surety: aux_offer["7"].toNumber(),
-                });
-            }            
-        } else {
-            if (aux_offer["1"] === false) {
-                offers.push({
-                    id_offer: i,
-                    address: aux_offer["0"],
-                    is_tenant: aux_offer["1"],
-                    amount: aux_offer["2"].toNumber(),
-                    frequency: aux_offer["3"].toNumber(),
-                    extension: aux_offer["4"].toNumber(),
-                    contract_duration: aux_offer["5"].toNumber(),
-                    surety: aux_offer["7"].toNumber(),
-                });
-            }      
-        }    
+        if (aux_offer["6"] == true) { // if the offer is not ACTIVE it is not added to the array
+            if (display_tenant === true) {
+                if (aux_offer["1"] === true) {
+                    offers.push({
+                        id_offer: i,
+                        address: aux_offer["0"],
+                        is_tenant: aux_offer["1"],
+                        amount: aux_offer["2"].toNumber(),
+                        frequency: aux_offer["3"].toNumber(),
+                        extension: aux_offer["4"].toNumber(),
+                        contract_duration: aux_offer["5"].toNumber(),
+                        surety: aux_offer["7"].toNumber(),
+                    });
+                }            
+            } else {
+                if (aux_offer["1"] === false) {
+                    offers.push({
+                        id_offer: i,
+                        address: aux_offer["0"],
+                        is_tenant: aux_offer["1"],
+                        amount: aux_offer["2"].toNumber(),
+                        frequency: aux_offer["3"].toNumber(),
+                        extension: aux_offer["4"].toNumber(),
+                        contract_duration: aux_offer["5"].toNumber(),
+                        surety: aux_offer["7"].toNumber(),
+                    });
+                }      
+            } 
+        }   
     }
-    
+
     return(offers);
 }
 
@@ -82,6 +85,7 @@ export const get_requests = async(id_offer) => {
             });
         }
     }
+
     return(requestants);
 }
 

@@ -17,12 +17,12 @@ const Rents = () => {
 
     return(
         <div>
-            <h1 className="py-6 text-center text-3xl" >GRMNT's</h1>
             <ul className="px-24 py-8">
                 {
                     rents.map((input) => (
                         <GrmntItems 
                             key={input.id_rent} 
+                            id_rent={input.id_rent}
                             tenant={input.tenant} 
                             landlord={input.landlord} 
                             frequency={input.frequency} 

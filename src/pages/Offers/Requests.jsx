@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { accept_rent_request, get_requests } from "../utils/Offer";
 import { Button, Navbar } from "../components/components";
+import { useParams } from "react-router-dom";
 
 const Requests = () => {
+
+    const {id_offer} = useParams();
 
     const [requests, setRequests] = useState([]);
 
     const handle_requests = () => {
-        get_requests(0)
+        get_requests(Number(id_offer))
             .then(request_items => setRequests(request_items)
         )   
     }
@@ -21,7 +24,7 @@ const Requests = () => {
     }, []);
 
     return(
-        <div>
+        <div className="bg-black text-white">
             <div>
                 <Navbar/>
             </div>

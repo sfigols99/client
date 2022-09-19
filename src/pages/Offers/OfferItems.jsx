@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const OfferItems = (props) => {
     
     const request_offer = (id_offer) => {        
+        //console.log(id_offer);
         pick_offer(id_offer);
     }
     
@@ -12,7 +13,7 @@ const OfferItems = (props) => {
         <li className="py-4 border-t last:border-b">
             <div className="px-2">
                 <div className="flow-root">
-                    <Link to="/requests">
+                    <Link to={"/requests/"+props.id_offer}>
                         <h1 className="flex text-xl float-left">{props.address}</h1>
                     </Link>
                     {/* <span className="px-8 float-right">{props.comments}</span>   */}

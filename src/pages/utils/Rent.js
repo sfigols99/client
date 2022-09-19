@@ -1,4 +1,4 @@
-import {contract_instance} from "./config";
+import { contract_instance } from "./config";
 
 const get_rent = async(id) => {
     const rent = await contract_instance.get_rent(id);
@@ -9,6 +9,20 @@ const get_rent_count = async() => {
     const rent_count = await contract_instance.rent_count();
     return(rent_count.toNumber());
 }
+
+export const get_rent_params = async(id) => {
+    const rent = await get_rent(id);
+    return{
+        tenant: rent["0"],
+        landlord: rent["1"],
+        frequency: rent["2"].toNumber(),
+        last_payment: rent["3"].toNumber(),
+        contract_end: rent["4"].toNumber(),
+        amount: rent["5"].toNumber(),
+        extension: rent["7"].toNumber(),
+        surety: rent["9"].toNumber()
+    }
+} 
 
 export const get_rents = async() => {
     const rent_count = await get_rent_count();

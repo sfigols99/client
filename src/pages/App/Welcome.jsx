@@ -2,7 +2,6 @@ import { load } from '../utils/MetaMask';
 import { Button, NoMetamask } from '../components/components';
 import { Login } from '../Login/login';
 import { useState } from "react";
-import { AddOffer } from '../Offers/offers';
 
 /* ------ APIS dels contractes ------ */
 import { is_persona_fisica } from '../utils/Persona_Fisica';
@@ -17,7 +16,6 @@ const Welcome = () => {
     const [connButtonText, setConnButtonText] = useState("Connect Wallet");
     const [userAdded, setUserAdded] = useState(true);
     const [metamaskExists, setMetamaskExists] = useState(true);
-    const [offer, setOffer] = useState(true);
     /* ------------------------------------------------- */
  
     const connect_wallet = async () => {
@@ -39,10 +37,6 @@ const Welcome = () => {
         }
         setDefaultAccount(account);
     }
-
-    const manage_offer = async () => {
-        setOffer(false);
-    }
  
     return (
         <div className="justify-center items-center">
@@ -60,12 +54,6 @@ const Welcome = () => {
                     text={"Connect Wallet"}
                 />
             </div>
-            <div  className='flex items-center justify-center py-20'>
-                <Button
-                    onClick={manage_offer}
-                    text={"Add Offer"}
-                />
-            </div>
             
             <div className=''>
                 <h3 className='text-center'>
@@ -76,9 +64,6 @@ const Welcome = () => {
                 </div>
                 <div>
                     <Login trigger={userAdded} account={defaultAccount}/>
-                </div>
-                <div>
-                    <AddOffer trigger={offer}/>
                 </div>
             </div>
             <div className="py-32 items-center justify-center">

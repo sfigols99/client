@@ -15,7 +15,7 @@ const Navbar = () => {
         {id: 1, name: "Landlords", path:'/landlords'},
         {id: 2, name: "Tenants", path:'/tenants'},
         {id: 3, name: "GRMNT's", path:'/grmnts'},
-        {id: 4, name: "My Offers", path:'/my_offers'}
+        {id: 4, name: "My Profile", path:'/my_profile'}
     ];
 
     return (

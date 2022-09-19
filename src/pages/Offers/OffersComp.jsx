@@ -17,18 +17,10 @@ const OffersComp = (props) => {
 
     return(
         <div>
-            <h1 className="py-6 text-center text-3xl">
-                {
-                    (props.is_tenant) ?
-                        <span>Tenant Offers</span>
-                    :
-                        <span>Landlord Offers</span>
-                }             
-            </h1>
             <ul className="px-24 py-8">
                 {
                     offers.map((item) => (
-                        <OfferItems key={item.id_offer} address={item.address} amount={item.amount} frequency={item.frequency} comments={item.comments}/>
+                        <OfferItems key={item.id_offer} id_offer={item.id_offer} address={item.address} amount={item.amount} frequency={item.frequency} comments={item.comments}/>
                     ))
                 }
             </ul>

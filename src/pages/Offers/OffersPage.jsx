@@ -8,6 +8,16 @@ const OffersPage = (props) => {
                 <Navbar />
             </div>
             <div>
+                <div>
+                    <h1 className="py-6 text-center text-3xl">
+                        {
+                            (props.is_tenant) ?
+                                <span>Tenant Offers</span>
+                            :
+                                <span>Landlord Offers</span>
+                        }             
+                    </h1>
+                </div>
                 <OffersComp is_tenant={props.is_tenant}/>
             </div>
             <div>
