@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="grmnts" element={<GRMNTs />} /> 
           <Route path="my_profile" element={<MyProfile/>} />
           <Route path="requests/:id_offer" element={<Requests/>} />
-          <Route path="grmnts/rents/:id_rent" element={<Rent/>} />
+          <Route path="rents/:id_rent" element={<Rent/>} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>
