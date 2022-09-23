@@ -33,7 +33,7 @@ const MyProfile = () => {
             <h1 className="py-6 text-center text-3xl">
                     Active Offers
                 </h1>
-                <OffersComp/>
+                <OffersComp profile={true}/>
             </div>
             <div>
                 <AddOffer trigger={offer}/>

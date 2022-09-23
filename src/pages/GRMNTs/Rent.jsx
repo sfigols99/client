@@ -19,25 +19,44 @@ const Rent = (props) => {
     });
 
     const payment_handler = async(id_rent, message) => {
-        await pay_rent(id_rent, message);
+        try{
+            await pay_rent(id_rent, message);
+        } catch (error) {
+            console.log(error.reason)
+        }
     }
 
     const surety_payment_handler = async(id_rent, message) => {
-        await pay_surety(id_rent, message);
+        try {
+            await pay_surety(id_rent, message);
+        } catch (error) {
+            console.log(error.reason)
+        }
     }
 
     const cancel_handler = async(id_rent) => {
-        await cancel_contract(id_rent);
+        try {
+            await cancel_contract(id_rent);
+        }
+        catch (error) {
+            console.log(error.reason);
+        }
     }
 
     const surety_back_handler = async(id_rent, accepted, message) => {
-        await surety_back(id_rent, accepted, message);
+        try {
+            await surety_back(id_rent, accepted, message);
+        } catch (error) {
+            console.log(error.reason);
+        }
     }
 
     const handle_rent = () => {
         get_rent_params(Number(id_rent))
             .then(rent_items => setRent(rent_items))
     }
+
+    // tenim rent
 
     useEffect(() => {
         handle_rent();

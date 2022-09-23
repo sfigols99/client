@@ -20,7 +20,7 @@ const OffersComp = (props) => {
             <ul className="px-24 py-8">
                 {
                     offers.map((item) => (
-                        <OfferItems key={item.id_offer} id_offer={item.id_offer} address={item.address} amount={item.amount} frequency={item.frequency} comments={item.comments}/>
+                        <OfferItems profile={props.profile} key={item.id_offer} id_offer={item.id_offer} address={item.address} amount={item.amount} frequency={item.frequency} comments={item.comments}/>
                     ))
                 }
             </ul>

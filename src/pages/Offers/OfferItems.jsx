@@ -24,7 +24,12 @@ const OfferItems = (props) => {
                 </div>
             </div>
             <div className="flex justify-end items-end px-24 p-2">
-                <Button onClick={() => request_offer(props.id_offer)} text={"Request"}/>
+                {
+                    (props.profile) ?
+                    ""
+                    :
+                    <Button onClick={() => request_offer(props.id_offer)} text={"Request"}/>
+                }
             </div>
         </li>
     )

@@ -57,12 +57,12 @@ export const get_rents = async() => {
 //// Rent functions
 
 export const pay_rent = async(id_rent, message) => {
-    // Do transfer with ethers js
+    // Do transfer with ethers js and Metamask
     await contract_instance.pay_rent(id_rent, message);
 }
 
 export const pay_surety = async(id_rent, message) => {
-    // Do transfer with ethers js
+    // Do transfer with ethers js and Metamask
     await contract_instance.pay_surety(id_rent, message);
 }
 
@@ -73,5 +73,3 @@ export const cancel_contract = async(id_rent) => {
 export const surety_back = async(id_rent, is_accepted, message) => {
     await contract_instance.surety_back(id_rent, is_accepted, message);
 }
-
-// Metamask Transfers

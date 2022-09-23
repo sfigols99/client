@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 
 import abi from './Rent.json';
 
-let signer = "";
+let signer = undefined;
 
 try {
     const provider = new ethers.providers.Web3Provider(ethereum);
