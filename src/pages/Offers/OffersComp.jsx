@@ -7,7 +7,7 @@ const OffersComp = (props) => {
     const [offers, setOffers] = useState([]);
 
     const handle_offers = () => {
-        get_offers(props.is_tenant)
+        get_offers(props.is_tenant, props.profile)
             .then(offer_items => setOffers(offer_items))
     }
 

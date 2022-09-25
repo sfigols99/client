@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { get_rents } from "../utils/Rent";
 import { GrmntItems} from "./grmnts";
 
-const Rents = () => {
+const Rents = (props) => {
 
     const [rents, setRents] = useState([]);
 
     const handle_rents = () => {
-        get_rents()
+        get_rents(props.account)
             .then(rents_items => setRents(rents_items))
     }
 

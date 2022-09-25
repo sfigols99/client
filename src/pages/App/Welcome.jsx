@@ -1,14 +1,10 @@
-import { load } from '../utils/MetaMask';
+import { verify_user } from '../utils/Auth';
 import { Button, NoMetamask } from '../components/components';
-import { Login } from '../Login/login';
 import { useState } from "react";
 
-/* ------ APIS dels contractes ------ */
-import { is_persona_fisica } from '../utils/Persona_Fisica';
-import { is_persona_juridica } from '../utils/Persona_Juridica';
 /* --------------------------------- */
 
-const Welcome = () => {
+const Welcome = (props) => {
     const [name, setName] = useState(" GRMNT's");
 
     /* --------------- Wallet connection --------------- */
@@ -17,21 +13,22 @@ const Welcome = () => {
     const [userAdded, setUserAdded] = useState(true);
     const [metamaskExists, setMetamaskExists] = useState(true);
     /* ------------------------------------------------- */
- 
+    
     const connect_wallet = async () => {
-        const account = await load();
+        const account = await verify_user();
+        
         setMetamaskExists(true);
+        
         if(account === "No_Metamask") {
             setMetamaskExists(false);
         }
-        else if (await is_persona_fisica(account) || await is_persona_juridica(account)) {
+        else if (account === true) {
             setUserAdded(true);
             setConnButtonText("GRMNT'ED!");
             console.log("It is added");
         }
-        else {
+        else if (account === false) {
             // trigger per què surti el popup de login
-            console.log(account);
             setUserAdded(false);
             console.log("It is not added");
         }
@@ -61,9 +58,6 @@ const Welcome = () => {
                 </h3>
                 <div>
                     <NoMetamask trigger={metamaskExists}/>
-                </div>
-                <div>
-                    <Login trigger={userAdded} account={defaultAccount}/>
                 </div>
             </div>
             <div className="py-32 items-center justify-center">

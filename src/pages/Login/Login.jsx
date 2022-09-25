@@ -7,17 +7,13 @@ const Login = (props) => {  // Si és la primera vegada que apreta el botó de l
     const [userType, setUserType] = useState(true);
     //const [userIn, setUserIn] = useState(true);
 
-    return (props.trigger) ? 
-        "" 
-    : 
-        (
-        <div className="fixed inset-0 bg-white bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
             <div className="bg-zinc-900 text-white p-4 rounded-lg">
                 <div className="flex justify-between items-end p-4">
                     <button>
                         <AiOutlineClose/>
-                    </button>
-                    
+                    </button>                    
                     <Button onClick={() => setUserType(!userType)} text={
                         (userType) ? "Set Enterprise registration" : "Set User registration"
                     } 

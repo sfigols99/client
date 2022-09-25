@@ -1,8 +1,7 @@
 import { Navbar, Footer, Button } from '../components/components';
-import { AddOffer } from '../Offers/offers';
+import { AddOffer, OffersComp } from '../Offers/offers';
 import { Rents } from '../GRMNTs/grmnts';
 import { useState } from 'react';
-import { OffersComp } from '../Offers/offers';
 
 const MyProfile = () => {
     
@@ -27,7 +26,7 @@ const MyProfile = () => {
                 <h1 className="py-6 text-center text-3xl">
                     Active Rents
                 </h1>
-                <Rents/>
+                <Rents account={true}/>
             </div>
             <div>
             <h1 className="py-6 text-center text-3xl">

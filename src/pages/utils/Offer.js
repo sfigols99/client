@@ -1,8 +1,27 @@
 import { contract_instance } from './config';
-import { load } from './MetaMask';
+import { load } from './Auth';
 
-export const new_offer = async(is_landlord, amount, frequency, extension, contract_instance_duration, surety)  => {
-    await contract_instance.new_offer(is_landlord, amount, frequency, extension, contract_instance_duration, surety);
+const set_timestamp = (num) => {
+    /**
+     * 
+     * En aquesta funció transformem el valor getDate() a block.timestamp (solidity)
+     * El valor en solidity està contat en segons, mentre que a js està en milisegons
+     * És per això que fem la divisió al final.  
+     *  
+    */
+
+    const date_zero = new Date(0);
+    date_zero.setDate(date_zero.getDate() + (num-1));
+    const result = Math.floor(date_zero.getTime() / 1000);
+    return(result);
+}
+
+export const new_offer = async(is_landlord, amount, frequency, extension, contract_instance_duration, surety)  => {    
+    const f2tmstp = set_timestamp(frequency);
+    const ext2tmstp = set_timestamp(extension);
+    const dur2tmstp = set_timestamp(contract_instance_duration);
+    
+    await contract_instance.new_offer(is_landlord, amount, f2tmstp, ext2tmstp, dur2tmstp, surety);
 }
 
 export const pick_offer = async(offer_id) => {
@@ -19,46 +38,67 @@ const get_offer = async(value) => {
     return(offer);
 }
 
-export const get_offers = async(display_tenant) => {
+export const get_offers = async(display_tenant, profile) => {
     const count_offers = await get_count_offers();
     
     const offers = []
 
     let aux_offer;
 
-    for(let i = 0; i < count_offers; i++) {
-        aux_offer = await get_offer(i);
+    const account = await load();
 
-        if (aux_offer["6"] == true) { // if the offer is not ACTIVE it is not added to the array
-            if (display_tenant === true) {
-                if (aux_offer["1"] === true) {
-                    offers.push({
-                        id_offer: i,
-                        address: aux_offer["0"],
-                        is_tenant: aux_offer["1"],
-                        amount: aux_offer["2"].toNumber(),
-                        frequency: aux_offer["3"].toNumber(),
-                        extension: aux_offer["4"].toNumber(),
-                        contract_duration: aux_offer["5"].toNumber(),
-                        surety: aux_offer["7"].toNumber(),
-                    });
-                }            
-            } else {
-                if (aux_offer["1"] === false) {
-                    offers.push({
-                        id_offer: i,
-                        address: aux_offer["0"],
-                        is_tenant: aux_offer["1"],
-                        amount: aux_offer["2"].toNumber(),
-                        frequency: aux_offer["3"].toNumber(),
-                        extension: aux_offer["4"].toNumber(),
-                        contract_duration: aux_offer["5"].toNumber(),
-                        surety: aux_offer["7"].toNumber(),
-                    });
-                }      
+    if(profile === false) {
+        for(let i = 0; i < count_offers; i++) {
+            aux_offer = await get_offer(i);
+    
+            if (aux_offer["6"] == true) { // if the offer is not ACTIVE it is not added to the array
+                if (display_tenant === true) {
+                    if (aux_offer["1"] === true) {
+                        offers.push({
+                            id_offer: i,
+                            address: aux_offer["0"],
+                            is_tenant: aux_offer["1"],
+                            amount: aux_offer["2"].toNumber(),
+                            frequency: aux_offer["3"].toNumber(),
+                            extension: aux_offer["4"].toNumber(),
+                            contract_duration: aux_offer["5"].toNumber(),
+                            surety: aux_offer["7"].toNumber(),
+                        });
+                    }            
+                } else {
+                    if (aux_offer["1"] === false) {
+                        offers.push({
+                            id_offer: i,
+                            address: aux_offer["0"],
+                            is_tenant: aux_offer["1"],
+                            amount: aux_offer["2"].toNumber(),
+                            frequency: aux_offer["3"].toNumber(),
+                            extension: aux_offer["4"].toNumber(),
+                            contract_duration: aux_offer["5"].toNumber(),
+                            surety: aux_offer["7"].toNumber(),
+                        });
+                    }      
+                } 
+            }   
+        }    
+    } else if (profile === true) {        
+        for(let i = 0; i < count_offers; i++) {
+            aux_offer = await get_offer(i);
+
+            if (account === aux_offer["0"].toLowerCase() && aux_offer["6"]) {
+                offers.push({
+                    id_offer: i,
+                    address: aux_offer["0"],
+                    is_tenant: aux_offer["1"],
+                    amount: aux_offer["2"].toNumber(),
+                    frequency: aux_offer["3"].toNumber(),
+                    extension: aux_offer["4"].toNumber(),
+                    contract_duration: aux_offer["5"].toNumber(),
+                    surety: aux_offer["7"].toNumber(),
+                });
             } 
-        }   
-    }
+        }
+    }   
 
     return(offers);
 }

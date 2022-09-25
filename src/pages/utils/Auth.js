@@ -1,4 +1,6 @@
 // En aquest modul tractem les referències de metamask
+import { is_persona_fisica } from "./Persona_Fisica";
+import { is_persona_juridica } from "./Persona_Juridica";
 
 export const load = async () => {
     try {
@@ -15,3 +17,16 @@ export const load = async () => {
         return("Error");
     }
 };
+
+export const verify_user = async() => {
+    const account = await load();
+    if(account === "No_Metamask") {
+        return("No_Metamask")
+    }
+    else if (await is_persona_fisica(account) || await is_persona_juridica(account)) {
+        return(true);
+    }
+    else {
+        return(false);
+    }
+}

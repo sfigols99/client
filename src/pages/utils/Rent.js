@@ -1,3 +1,4 @@
+import { load } from "./Auth";
 import { contract_instance } from "./config";
 
 ////// Gets
@@ -30,26 +31,49 @@ export const get_rent_params = async(id) => {
     }
 } 
 
-export const get_rents = async() => {
+export const get_rents = async(all_accounts) => {
     const rent_count = await get_rent_count();
-        
+
     const rents = [];
 
     let aux_rent;
-    for (let i = 0; i < rent_count; i++) {
-        aux_rent = await get_rent(i);
-        rents.push({
-            id_rent: i,
-            tenant: aux_rent["0"],
-            landlord: aux_rent["1"],
-            frequency: aux_rent["2"].toNumber(),
-            last_payment: aux_rent["3"].toNumber(),
-            contract_end: aux_rent["4"].toNumber(),
-            amount: aux_rent["5"].toNumber(),
-            extension: aux_rent["7"].toNumber(),
-            surety: aux_rent["9"].toNumber(),
-        })
+
+    const account = await load();
+
+    if(all_accounts === false) {
+        for (let i = 0; i < rent_count; i++) {
+            aux_rent = await get_rent(i);
+            rents.push({
+                id_rent: i,
+                tenant: aux_rent["0"],
+                landlord: aux_rent["1"],
+                frequency: aux_rent["2"].toNumber(),
+                last_payment: aux_rent["3"].toNumber(),
+                contract_end: aux_rent["4"].toNumber(),
+                amount: aux_rent["5"].toNumber(),
+                extension: aux_rent["7"].toNumber(),
+                surety: aux_rent["9"].toNumber(),
+            })
+        }
+    } else {
+        for (let i = 0; i < rent_count; i++) {
+            aux_rent = await get_rent(i); // Arreglar!!!! lower case
+            if(aux_rent["1"].toLowerCase() === account || aux_rent["0"].toLowerCase() === account.toLowerCase()) {
+                rents.push({
+                    id_rent: i,
+                    tenant: aux_rent["0"],
+                    landlord: aux_rent["1"],
+                    frequency: aux_rent["2"].toNumber(),
+                    last_payment: aux_rent["3"].toNumber(),
+                    contract_end: aux_rent["4"].toNumber(),
+                    amount: aux_rent["5"].toNumber(),
+                    extension: aux_rent["7"].toNumber(),
+                    surety: aux_rent["9"].toNumber(),
+                })
+            }
+        }
     }
+    
 
     return(rents);
 }
