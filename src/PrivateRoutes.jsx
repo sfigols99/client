@@ -1,13 +1,13 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { load, verify_user } from './pages/utils/Auth';
 import { useEffect, useState } from 'react';
-import {NoMetamask} from './pages/components/components';
+import { NoMetamask } from './pages/components/components';
 
 const PrivateRoutes = () => {           
     
     const nav = useNavigate();
 
-    const [metamaskExists, setMetamaskExists] = useState();
+    const [metamaskExists, setMetamaskExists] = useState(true);
 
     const handle_login = async() => {
         const verify = await verify_user();
