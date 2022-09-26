@@ -1,26 +1,21 @@
 import { Navbar, Footer, Button } from '../components/components';
-import { AddOffer, OffersComp } from '../Offers/offers';
+import { OffersComp } from '../Offers/offers';
 import { Rents } from '../GRMNTs/grmnts';
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const MyProfile = () => {
-    
-    const [offer, setOffer] = useState(true);
-    
-    const manage_offer = async () => {
-        setOffer(false);
-    }
-
     return(
         <div className='bg-black text-white'>
             <div className='flex-initial justify-center items-center '>
                 <Navbar />
             </div>
-            <div className='flex items-center justify-center py-20'>
-                <Button
-                    onClick={manage_offer}
-                    text={"Add Offer"}
-                />
+            <div className='flex items-end justify-end px-20 pt-8'>
+                <Link to="/add_offer">
+                    <Button
+                        text={"Add Offer"}
+                    />
+                </Link>
+                
             </div>
             <div>
                 <h1 className="py-6 text-center text-3xl">
@@ -33,9 +28,6 @@ const MyProfile = () => {
                     Active Offers
                 </h1>
                 <OffersComp profile={true}/>
-            </div>
-            <div>
-                <AddOffer trigger={offer}/>
             </div>
             <div>
                 <Footer/>

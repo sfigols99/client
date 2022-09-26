@@ -1,8 +1,11 @@
 import { new_offer } from "../utils/Offer";
 import { useState } from "react";
-import { FormInput, Button } from "../components/components";
+import { FormInput, Button, Navbar } from "../components/components";
+import { Link, useNavigate } from "react-router-dom";
 
 const Offer_Form = (props) => {
+    let navigate = useNavigate();
+
     const [values, setValues] = useState({
         is_tenant: "",
         amount: "",
@@ -15,6 +18,8 @@ const Offer_Form = (props) => {
     const add_offer = (e) => {
         e.preventDefault();
         new_offer(values.is_tenant, parseInt(values.amount), parseInt(values.frequency), parseInt(values.extension), parseInt(values.contract_duration), parseInt(values.surety));
+        // Wait metamask response
+        navigate("/my_profile");
     }
 
     const offer_inputs = [
@@ -24,7 +29,8 @@ const Offer_Form = (props) => {
             type:"checkbox",
             placeholder:"",
             label:"Tenant",
-            value:false
+            value:"",
+            checked:true
         },
         {
             id:2,
@@ -81,13 +87,12 @@ const Offer_Form = (props) => {
             unit:"ETH"
         }
     ];
-    
 
     const onChange = (e) => {
         if(e.target.type === "checkbox") {
             setValues({
                 ...values,
-                [e.target.name]: !e.target.checked
+                [e.target.name]: e.target.checked
             });            
         } else {
             setValues({
@@ -111,11 +116,14 @@ const Offer_Form = (props) => {
                         onChange={onChange}
                         errormessages={input.errormessages}
                         units={input.unit}
+                        checked={input.checked}
                     />
                 )) 
             }
             <div className="p-4 flex items-center justify-center">
-                <Button text="Start" onClick={add_offer}/>
+                <Link to="/my_profile" onClick={add_offer}>
+                    <Button text="Start"/>
+                </Link>
             </div>        
         </form>
     );
@@ -124,13 +132,15 @@ const Offer_Form = (props) => {
 const AddOffer = (props) => {  // Si és la primera vegada que apreta el botó de login 
     //const [userIn, setUserIn] = useState(true);
 
-    return (props.trigger) ? 
-        "" 
-    : 
-        (
-        <div className="fixed inset-0 bg-white bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-            <div className="bg-zinc-900 text-white p-4 rounded-lg">
-                <Offer_Form/>
+    return (
+        <div>
+            <div className="border-b-4 border-black">
+                <Navbar/>
+            </div>
+            <div className="bg-gray-400 inset-0 flex justify-center items-center p-20">
+                <div className="bg-zinc-900 text-white p-4 rounded-lg">
+                    <Offer_Form/>
+                </div>
             </div>
         </div>
     );

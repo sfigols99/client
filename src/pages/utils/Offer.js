@@ -85,6 +85,23 @@ export const get_offers = async(display_tenant, profile) => {
         for(let i = 0; i < count_offers; i++) {
             aux_offer = await get_offer(i);
 
+            /**
+             * 
+             * Comparem adreces passant-ho tot a lowercase(). La questió és que una
+             * adreça té dos variants una amb checksum(algunes lletres amb majuscules)
+             * i l'altra sense(la qual fem servir per comparar)
+             * 
+             * 
+             *      * https://support.mycrypto.com/general-knowledge/ethereum-blockchain/ethereum-address-has-uppercase-and-lowercase-letters/
+             *      ---------------------------------------------------------------------------------------------------------------------------
+             * 
+             * The one that is all lowercase is not checksummed, meaning that you 
+             * could mistype a letter or number, send it off, and it would be lost 
+             * forever. If you use the checksummed version and mistype it, it will 
+             * tell you that it's an invalid address.
+             * 
+             */
+
             if (account === aux_offer["0"].toLowerCase() && aux_offer["6"]) {
                 offers.push({
                     id_offer: i,

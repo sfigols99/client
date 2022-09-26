@@ -24,9 +24,11 @@ export const verify_user = async() => {
         return("No_Metamask")
     }
     else if (await is_persona_fisica(account) || await is_persona_juridica(account)) {
+        console.log(true);
         return(true);
     }
     else {
+        console.log(false);
         return(false);
     }
 }

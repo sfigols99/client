@@ -2,6 +2,7 @@ import { set_persona_juridica } from '../utils/Persona_Juridica';
 import { set_persona_fisica } from '../utils/Persona_Fisica';
 import { useState } from "react";
 import { FormInput, Button } from '../components/components';
+import { useNavigate } from 'react-router-dom';
 
 const AddPersona = (props) => {
     const [pjValues, pjSetValues] = useState({
@@ -12,6 +13,8 @@ const AddPersona = (props) => {
         den_con: "",
         admin: ""
     })
+
+    const nav = useNavigate();
 
     const [pfValues, pfSetValues] = useState({
         // account: props.account,  // No ens cal inicialitzar-lo ja que el tenim de propietats
@@ -29,6 +32,7 @@ const AddPersona = (props) => {
         else {
             set_persona_juridica(props.account, pjValues.nif, pjValues.den_social, pjValues.location, pjValues.den_con, pjValues.admin);
         }
+        nav("/");
     }
 
     const pj_inputs = [

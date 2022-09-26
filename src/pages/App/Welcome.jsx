@@ -1,35 +1,37 @@
-import { verify_user } from '../utils/Auth';
+import { verify_user, load } from '../utils/Auth';
 import { Button, NoMetamask } from '../components/components';
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 /* --------------------------------- */
 
 const Welcome = (props) => {
     const [name, setName] = useState(" GRMNT's");
 
+    const nav = useNavigate();
+
     /* --------------- Wallet connection --------------- */
     const [defaultAccount, setDefaultAccount] = useState("");
     const [connButtonText, setConnButtonText] = useState("Connect Wallet");
-    const [userAdded, setUserAdded] = useState(true);
     const [metamaskExists, setMetamaskExists] = useState(true);
     /* ------------------------------------------------- */
     
     const connect_wallet = async () => {
-        const account = await verify_user();
-        
+        const known_account = await verify_user();
         setMetamaskExists(true);
         
-        if(account === "No_Metamask") {
+        if(known_account === "No_Metamask") {
             setMetamaskExists(false);
         }
-        else if (account === true) {
-            setUserAdded(true);
+        else if (known_account === true) {
             setConnButtonText("GRMNT'ED!");
             console.log("It is added");
         }
-        else if (account === false) {
+        else if (known_account === false) {
             // trigger per què surti el popup de login
-            setUserAdded(false);
+            const account = await load();
+            nav("/login/"+account);
             console.log("It is not added");
         }
         setDefaultAccount(account);
