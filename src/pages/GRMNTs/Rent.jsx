@@ -3,6 +3,22 @@ import { useParams } from "react-router-dom";
 import { get_rent_params, pay_rent, pay_surety, cancel_contract, surety_back } from "../utils/Rent";
 import { Button, Navbar } from '../components/components';
 
+const RentAction = (props) => {
+    return(
+        <div>
+            {
+            (props.condition)
+            ?
+                <div className="p-5">
+                    <Button text={props.text} onClick={props.onClick}/>
+                </div> 
+            :
+                ""
+        }
+        </div>
+    )    
+}
+
 const Rent = (props) => {
     const {id_rent} = useParams();
     
@@ -17,6 +33,13 @@ const Rent = (props) => {
         extension: "",
         surety: ""
     });
+
+    const timestamp_2_date = (value) => {
+        const aux_date = new Date();
+        date.setDate()
+
+        return(date.getHours());
+    }
 
     const payment_handler = async(id_rent, message) => {
         try{
@@ -62,6 +85,9 @@ const Rent = (props) => {
         handle_rent();
     }, []);
 
+    
+    console.log(rent.frequency);
+
     return(
         <div>
             <div>
@@ -83,19 +109,11 @@ const Rent = (props) => {
                     <h1 className="p-2 px-10">State: {rent.state}</h1>
                     <h1 className="p-2 px-10">Extension: {rent.extension}</h1>
                     <h1 className="p-2 px-10">Surety: {rent.surety}</h1>
-                    <div className="flex justify-center items-center">
-                        <div className="p-5">
-                            <Button text="Pay Rent" onClick={() => payment_handler(id_rent, "Payment")}/>
-                        </div>
-                        <div className="p-5">
-                            <Button text="Pay Surety" onClick={() => surety_payment_handler(id_rent, "Surety")}/>
-                        </div>
-                        <div className="p-5">
-                            <Button text="Cancel Contract" onClick={() => cancel_handler(id_rent)}/>
-                        </div>
-                        <div className="p-5">
-                            <Button text="Surety Back" onClick={() => surety_back_handler(id_rent, true, "Hello")}/>
-                        </div>
+                    <div className="flex justify-center items-center">                        
+                        <RentAction text="Pay Rent" condition={(rent.state === 1) || (rent.state === 2)} onClick={() => payment_handler(id_rent, "Payment")}/>
+                        <RentAction text="Pay Surety" condition={(rent.state === 0)} onClick={() => surety_payment_handler(id_rent, "Payment")}/>
+                        <RentAction text="Cancel Contract" condition={rent.state === 1} onClick={() => cancel_handler(id_rent, "Payment")}/>
+                        <RentAction text="Surety Back" condition={rent.state === 3} onClick={() => surety_back_handler(id_rent, "Payment")}/>
                     </div>
                 </div>
             </div>

@@ -20,17 +20,18 @@ const Welcome = (props) => {
     const connect_wallet = async () => {
         const known_account = await verify_user();
         setMetamaskExists(true);
-        
+        const account = await load();
         if(known_account === "No_Metamask") {
             setMetamaskExists(false);
         }
         else if (known_account === true) {
             setConnButtonText("GRMNT'ED!");
+            setDefaultAccount(account);
             console.log("It is added");
         }
         else if (known_account === false) {
             // trigger per què surti el popup de login
-            const account = await load();
+            
             nav("/login/"+account);
             console.log("It is not added");
         }
@@ -50,7 +51,7 @@ const Welcome = (props) => {
             <div className='flex items-center justify-center py-20'>
                 <Button 
                     onClick={connect_wallet} 
-                    text={"Connect Wallet"}
+                    text={connButtonText}
                 />
             </div>
             
