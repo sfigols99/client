@@ -34,13 +34,6 @@ const Rent = (props) => {
         surety: ""
     });
 
-    const timestamp_2_date = (value) => {
-        const aux_date = new Date();
-        date.setDate()
-
-        return(date.getHours());
-    }
-
     const payment_handler = async(id_rent, message) => {
         try{
             await pay_rent(id_rent, message);
@@ -79,14 +72,26 @@ const Rent = (props) => {
             .then(rent_items => setRent(rent_items))
     }
 
+    const get_state = (state) => {
+        if(state === 0) {
+            return("Surety Pending...");
+        }
+        else if(state === 1 || state === 2) {
+            return("Started. ");
+        }
+        else if(state === 3) {
+            return("Contract ended, waiting surety approval by landlord. ")
+        }
+        else if(state === 4) {
+            return("Ended. :)")
+        }
+    }
+
     // tenim rent
 
     useEffect(() => {
         handle_rent();
     }, []);
-
-    
-    console.log(rent.frequency);
 
     return(
         <div>
@@ -102,13 +107,13 @@ const Rent = (props) => {
                 <div className="items-center">
                     <h1 className="p-2 px-10">Tenant Address: {rent.tenant}</h1>
                     <h1 className="p-2 px-10">Landlord Address: {rent.landlord}</h1>
-                    <h1 className="p-2 px-10">Frequency: {rent.frequency}</h1>
+                    <h1 className="p-2 px-10">Payment Frequency: {rent.frequency} DAYS</h1>
                     <h1 className="p-2 px-10">Last Payment: {rent.last_payment}</h1>
-                    <h1 className="p-2 px-10">Contract End: {rent.contract_end}</h1>
-                    <h1 className="p-2 px-10">Amount: {rent.amount}</h1>
-                    <h1 className="p-2 px-10">State: {rent.state}</h1>
-                    <h1 className="p-2 px-10">Extension: {rent.extension}</h1>
-                    <h1 className="p-2 px-10">Surety: {rent.surety}</h1>
+                    <h1 className="p-2 px-10">Contract Duration: {rent.contract_end} MONTHS</h1>
+                    <h1 className="p-2 px-10">Amount: {rent.amount} ETH</h1>
+                    <h1 className="p-2 px-10">State: {get_state(rent.state)}</h1>
+                    <h1 className="p-2 px-10">Extension: {rent.extension} MONTHS</h1>
+                    <h1 className="p-2 px-10">Surety: {rent.surety} ETH</h1>
                     <div className="flex justify-center items-center">                        
                         <RentAction text="Pay Rent" condition={(rent.state === 1) || (rent.state === 2)} onClick={() => payment_handler(id_rent, "Payment")}/>
                         <RentAction text="Pay Surety" condition={(rent.state === 0)} onClick={() => surety_payment_handler(id_rent, "Payment")}/>

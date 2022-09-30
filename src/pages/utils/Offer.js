@@ -1,7 +1,7 @@
 import { contract_instance } from './config';
 import { load } from './Auth';
 
-const set_timestamp = (num) => {
+const set_timestamp = (num, unit) => {
     /**
      * 
      * En aquesta funció transformem el valor getDate() a block.timestamp (solidity)
@@ -11,16 +11,21 @@ const set_timestamp = (num) => {
     */
 
     const date_zero = new Date(0);
-    date_zero.setDate(date_zero.getDate() + (num-1));
+    if (unit === "DAYS") {
+        date_zero.setDate(date_zero.getDate() + (num-1));
+    } else if (unit === "MONTHS") {
+        date_zero.setMonth(date_zero.getMonth() + (num));
+    }
+    
     const result = Math.floor(date_zero.getTime() / 1000);
     return(result);
 }
 
 export const new_offer = async(is_landlord, amount, frequency, extension, contract_instance_duration, surety)  => {    
-    const f2tmstp = set_timestamp(frequency);
-    const ext2tmstp = set_timestamp(extension);
-    const dur2tmstp = set_timestamp(contract_instance_duration);
-    
+    const f2tmstp = set_timestamp(frequency, "DAYS");
+    const ext2tmstp = set_timestamp(extension, "MONTHS");
+    const dur2tmstp = set_timestamp(contract_instance_duration, "MONTHS");
+
     await contract_instance.new_offer(is_landlord, amount, f2tmstp, ext2tmstp, dur2tmstp, surety);
 }
 

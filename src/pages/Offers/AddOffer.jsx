@@ -63,7 +63,7 @@ const Offer_Form = (props) => {
             disabled: false,
             errormessages: "",
             required: true,
-            unit:"DAYS"
+            unit:"MONTHS"
         },
         {
             id:5,
@@ -74,7 +74,7 @@ const Offer_Form = (props) => {
             disabled: false,
             errormessages: "",
             required: true,
-            unit:"DAYS"
+            unit:"MONTHS"
         },
         {
             id:6,
