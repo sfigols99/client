@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
-import { get_rents } from "../utils/Rent";
+import { get_rents, unset_timestamp } from "../utils/Rent";
 import { GrmntItems} from "./grmnts";
+import { PropagateLoader } from "react-spinners";
 
 const Rents = (props) => {
 
     const [rents, setRents] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handle_rents = () => {
         get_rents(props.account)
             .then(rents_items => setRents(rents_items))
+                .then(() => {
+                    if(rents) {
+                        setLoading(false)
+                }
+            }
+        )
     }
 
     useEffect(() => {
@@ -16,8 +24,13 @@ const Rents = (props) => {
     }, []);
 
     return(
-        <div>
-            <ul className="px-24 py-8">
+        <div className="px-24 py-8">
+            {
+                loading ?
+                <div className="flex justify-center items-center">
+                    <PropagateLoader color="#FFFFFF"/>
+                </div> :
+                <ul className="">
                 {
                     rents.map((input) => (
                         <GrmntItems 
@@ -25,12 +38,13 @@ const Rents = (props) => {
                             id_rent={input.id_rent}
                             tenant={input.tenant} 
                             landlord={input.landlord} 
-                            frequency={input.frequency} 
+                            frequency={unset_timestamp(input.frequency, "DAYS")} 
                             amount={input.amount}
                         />
                     ))
                 }
             </ul>
+            }
         </div>
     )
 }

@@ -9,13 +9,19 @@ const MyProfile = () => {
             <div className='flex-initial justify-center items-center '>
                 <Navbar />
             </div>
-            <div className='flex items-end justify-end px-20 pt-8'>
-                <Link to="/add_offer">
-                    <Button
-                        text={"Add Offer"}
-                    />
-                </Link>
-                
+            <div className='flex justify-end px-20 pt-8'>
+                <div className='p-3'>
+                    <Link to="/user">
+                        <Button text={"User Profile"}/> 
+                    </Link>
+                </div>
+                <div className='p-3'>
+                    <Link to="/add_offer">
+                        <Button
+                            text={"Add Offer"}
+                        />
+                    </Link>
+                </div>
             </div>
             <div>
                 <h1 className="py-6 text-center text-3xl">

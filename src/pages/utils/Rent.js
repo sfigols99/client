@@ -4,16 +4,27 @@ import { contract_instance } from "./config";
 ////// Gets
 
 const get_rent = async(id) => {
-    const rent = await contract_instance.get_rent(id);
+    let rent;
+    try {
+        rent = await contract_instance.get_rent(id);
+    } catch (error){
+        console.log(error.reason);  
+    }
     return(rent);
 }
 
 const get_rent_count = async() => {
-    const rent_count = await contract_instance.rent_count();
+    let rent_count;
+    try {
+        rent_count = await contract_instance.rent_count();
+    }
+    catch (error){
+        console.log(error.reason);  
+    }
     return(rent_count.toNumber());
 }
 
-const unset_timestamp = (timestamp, unit) => {
+export const unset_timestamp = (timestamp, unit) => {
     const time = new Date(timestamp * 1000);
     let days;
     if (unit === "DAYS") {
@@ -36,8 +47,8 @@ export const get_rent_params = async(id) => {
 
 
     return{
-        tenant: rent["0"],
-        landlord: rent["1"],
+        tenant: rent["1"],
+        landlord: rent["0"],
         frequency: frequency,
         last_payment: last_payment, // De data a timestamp
         contract_end: contract_end, // De data a timestamp
@@ -63,8 +74,8 @@ export const get_rents = async(all_accounts) => {
             if(aux_rent["6"] != 4) {
                 rents.push({
                     id_rent: i,
-                    tenant: aux_rent["0"],
-                    landlord: aux_rent["1"],
+                    tenant: aux_rent["1"],
+                    landlord: aux_rent["0"],
                     frequency: aux_rent["2"].toNumber(),
                     last_payment: aux_rent["3"].toNumber(),
                     contract_end: aux_rent["4"].toNumber(),
@@ -81,8 +92,8 @@ export const get_rents = async(all_accounts) => {
             if((aux_rent["1"].toLowerCase() === account || aux_rent["0"].toLowerCase() === account.toLowerCase()) && aux_rent["6"] != 4) {
                 rents.push({
                     id_rent: i,
-                    tenant: aux_rent["0"],
-                    landlord: aux_rent["1"],
+                    tenant: aux_rent["1"],
+                    landlord: aux_rent["0"],
                     frequency: aux_rent["2"].toNumber(),
                     last_payment: aux_rent["3"].toNumber(),
                     contract_end: aux_rent["4"].toNumber(),
@@ -103,18 +114,36 @@ export const get_rents = async(all_accounts) => {
 
 export const pay_rent = async(id_rent, message) => {
     // Do transfer with ethers js and Metamask
-    await contract_instance.pay_rent(id_rent, message);
+    try {
+
+        await contract_instance.pay_rent(id_rent, message);
+    } catch(error) {
+        console.log(error);
+    }    
 }
 
 export const pay_surety = async(id_rent, message) => {
     // Do transfer with ethers js and Metamask
-    await contract_instance.pay_surety(id_rent, message);
+    try {
+        await contract_instance.pay_surety(id_rent, message);
+    } catch {
+        console.log(error.reason)
+    }
 }
 
 export const cancel_contract = async(id_rent) => {
-    await contract_instance.cancel_rent(id_rent);
+    try {
+        await contract_instance.cancel_rent(id_rent);
+    } catch {
+        console.log(error.reason)
+    }
 }
 
 export const surety_back = async(id_rent, is_accepted, message) => {
-    await contract_instance.surety_back(id_rent, is_accepted, message);
+    try {
+        await contract_instance.surety_back(id_rent, is_accepted, message);
+    } catch (error) {
+        console.log(error.reason);
+    }
+    
 }

@@ -14,7 +14,7 @@ const set_timestamp = (num, unit) => {
     if (unit === "DAYS") {
         date_zero.setDate(date_zero.getDate() + (num-1));
     } else if (unit === "MONTHS") {
-        date_zero.setMonth(date_zero.getMonth() + (num));
+        date_zero.setMonth(date_zero.getMonth() + (num-1));
     }
     
     const result = Math.floor(date_zero.getTime() / 1000);
@@ -25,21 +25,39 @@ export const new_offer = async(is_landlord, amount, frequency, extension, contra
     const f2tmstp = set_timestamp(frequency, "DAYS");
     const ext2tmstp = set_timestamp(extension, "MONTHS");
     const dur2tmstp = set_timestamp(contract_instance_duration, "MONTHS");
-
-    await contract_instance.new_offer(is_landlord, amount, f2tmstp, ext2tmstp, dur2tmstp, surety);
+    try {
+        await contract_instance.new_offer(is_landlord, amount, f2tmstp, ext2tmstp, dur2tmstp, surety);
+    } catch(error) {
+        console.log(error.reason);
+    }
 }
 
 export const pick_offer = async(offer_id) => {
     //console.log(offer_id);
-    await contract_instance.pick_offer(offer_id);
+    try {
+        await contract_instance.pick_offer(offer_id);
+    } catch(error) {
+        console.log(error.reson);
+    }
 }
 
 export const accept_rent_request = async(request_id) => {
-    await contract_instance.accept_rent_request(request_id);
+    try {
+        await contract_instance.accept_rent_request(request_id);
+    } catch(error) {
+        console.log(error.reason);
+    }
+    
 }
 
 const get_offer = async(value) => {
-    const offer = await contract_instance.get_offer(value);
+    let offer;
+    try {
+        offer = await contract_instance.get_offer(value);
+    }
+    catch(error) {
+        console.log(error.reason);
+    }
     return(offer);
 }
 
@@ -54,7 +72,7 @@ export const get_offers = async(display_tenant, profile) => {
 
     if(profile === false) {
         for(let i = 0; i < count_offers; i++) {
-            aux_offer = await get_offer(i);
+            aux_offer = await get_offer(i);           
     
             if (aux_offer["6"] == true) { // if the offer is not ACTIVE it is not added to the array
                 if (display_tenant === true) {
@@ -88,8 +106,8 @@ export const get_offers = async(display_tenant, profile) => {
         }    
     } else if (profile === true) {        
         for(let i = 0; i < count_offers; i++) {
-            aux_offer = await get_offer(i);
-
+            const aux_offer = await get_offer(i);
+        
             /**
              * 
              * Comparem adreces passant-ho tot a lowercase(). La questió és que una
@@ -126,19 +144,29 @@ export const get_offers = async(display_tenant, profile) => {
 }
 
 const get_count_offers = async() => {
-    const count_offers = await contract_instance.offer_count();
+    let count_offers; // = undefined;
+    try {
+        count_offers = await contract_instance.offer_count();
+    } catch (error) { 
+        console.log(error.reason)
+    }
+    
     return(count_offers.toNumber());
 }
 
 export const get_requests = async(id_offer) => {
     const length = await get_request_count();
-    
+
     let requestants = [];
 
     let aux_req;
 
     for (let i = 0; i < length; i++) {
-        aux_req = await get_request(i);
+        try {
+            aux_req = await get_request(i);
+        } catch(error) {
+            console.log(error.reason);
+        }
         
         if(aux_req["1"].toNumber() === id_offer) {
             requestants.push({
@@ -152,12 +180,24 @@ export const get_requests = async(id_offer) => {
 }
 
 const get_request = async(i) => {
-    const request = await contract_instance.get_request(i);
+    let request;
+    try {
+        request = await contract_instance.get_request(i);
+    }
+    catch(error) {
+        console.log(error.reason);
+    }
     return(request);
 }
 
 const get_request_count = async() => {
-    const requests = await contract_instance.request_count();
+    let requests;
+    try {
+        requests = await contract_instance.request_count();
+    }
+    catch(error) {
+        console.log(error.reason);
+    }
     return(requests.toNumber());
 }
 
@@ -171,8 +211,11 @@ export const get_user_offers = async(user_id) => {
     let aux_offer;
 
     for(let i = 0; i < count_offers; i++) {
-        
-        aux_offer = await get_offer(i);
+        try {
+            aux_offer = await get_offer(i);
+        } catch (error){
+            console.log(error.reason);  
+        }
 
         if(address === aux_offer["1"]) {
             offers.push({

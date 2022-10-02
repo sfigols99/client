@@ -30,7 +30,7 @@ const PrivateRoutes = () => {
 
     return (
         metamaskExists ?
-        <Outlet/> : <NoMetamask/>
+        <Outlet/> : <Login/>
     )
 }
 

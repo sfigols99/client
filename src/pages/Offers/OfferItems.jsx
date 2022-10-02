@@ -1,6 +1,8 @@
-import { Button } from '../components/components';
+import { Button, Error } from '../components/components';
 import { pick_offer } from '../utils/Offer'; 
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+
 
 const OfferItems = (props) => {
     
@@ -9,6 +11,8 @@ const OfferItems = (props) => {
         pick_offer(id_offer);
     }
     
+    const [toggleError, setToggleError] = useState(false);
+
     return(
         <li className="py-4 border-t last:border-b">
             <div className="px-2">
@@ -28,8 +32,11 @@ const OfferItems = (props) => {
                     (props.profile) ?
                     ""
                     :
-                    <Button onClick={() => request_offer(props.id_offer)} text={"Request"}/>
+                    <Button onClick={() => request_offer(props.id_offer)} onError={() => setToggleError(true)} text={"Request"}/>
                 }
+            </div>
+            <div>
+                <Error toggle={toggleError}/>
             </div>
         </li>
     )

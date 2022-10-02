@@ -1,51 +1,101 @@
 import { contract_instance } from "./config";
 
-export const set_persona_juridica = (nif, den_social, adreca, dades_constitucio, apoderat) => {
-    contract_instance.set_persona_juridica(nif, den_social, adreca, dades_constitucio, apoderat);
+export const set_persona_juridica = async(nif, den_social, adreca, dades_constitucio, apoderat) => {
+    try {
+        contract_instance.set_persona_juridica(nif, den_social, adreca, dades_constitucio, apoderat);
+    } catch(error) {
+        console.log(error.reason);
+    }
 }
 
 export const up_nif = (nif) => {
-    contract_instance.up_nif(nif);
+    try {
+        contract_instance.up_nif(nif);
+    } catch(error) {
+        console.log(error.reason);
+    }
+    
 }
 
 export const up_den_social = (den_social) => {
-    contract_instance.up_den_social(den_social);
+    try {
+        contract_instance.up_den_social(den_social);
+    } catch(error) {
+        console.log(error.reason);
+    }    
 }
 
 export const up_pj_adreca = (adreca) => {
-    contract_instance.up_adreca(adreca);
+    try{
+        contract_instance.up_adreca(adreca);
+    } catch(error) {
+        console.log(error.reason);
+    }  
 }
 
 export const up_dades_constitucio = (dades_constitucio) => {
-    contract_instance.up_dades_constitucio(dades_constitucio);
+    try {
+        contract_instance.up_dades_constitucio(dades_constitucio);
+    } catch(error) {
+        console.log(error.reason);
+    }
 }
 
 export const up_apoderat = (apoderat) => {
-    contract_instance.up_apoderat(apoderat)
+    try {
+        contract_instance.up_apoderat(apoderat)
+    } catch(error) {
+        console.log(error.reason);
+    } 
 }
 
 export const get_pjuridica = async (address) => {
-    const user = contract_instance.get_pjuridica(address);
+    let user;
+    try {
+        user = contract_instance.get_pjuridica(address);
+    } catch(error) {
+        console.log(error.reason);
+    }
     return(user);
 }
 
 export const get_pjuridiques = async () => {
-    const users = contract_instance.get_pjuridiques();
+    let users;
+    try{
+        users = contract_instance.get_pjuridiques();
+    } catch(error) {
+        console.log(error.reason);
+    }
     return(users);
 }
 
 export const pj_all_addresses = async () => {
-    const quant = contract_instance.get_quant_addresses();
+    let quant;
+    try {
+        quant = contract_instance.get_quant_addresses();
+    } catch(error) {
+        console.log(error.reason)
+    }
     return(quant);
 }
 
 export const pj_exists = async () => {
-    const user_in_db = await contract_instance.is_user_added(address);
+    let user_in_db;
+    
+    try {
+        user_in_db = await contract_instance.is_user_added(address);
+    } catch(error) {
+        console.log(error.reason);
+    }
     return(user_in_db);
 }
 
 export const del_pj = () => {
-    contract_instance.del_address(address);
+    try {
+        contract_instance.del_address(address);
+    } catch (error) {
+        console.log(error.reason);
+    }
 }
 
 export const is_persona_juridica = async(account) => {
