@@ -18,7 +18,9 @@ const OffersPage = (props) => {
                         }             
                     </h1>
                 </div>
-                <OffersComp is_tenant={props.is_tenant} profile={false}/>
+                <div className='flex-initial min-h-screen'>
+                    <OffersComp is_tenant={props.is_tenant} profile={false}/>
+                </div>
             </div>
             <div>
                 <Footer/>

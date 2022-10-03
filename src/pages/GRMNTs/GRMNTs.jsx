@@ -11,7 +11,9 @@ const GRMNTs = () => {
                 <div>
                     <h1 className="py-6 text-center text-3xl" >GRMNT's</h1>
                 </div>
-                <Rents account={false}/>
+                <div className='flex-initial min-h-screen'>
+                    <Rents account={false}/>
+                </div>
             </div>
             <div>
                 <Footer/>

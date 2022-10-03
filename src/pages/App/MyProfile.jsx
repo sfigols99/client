@@ -23,17 +23,19 @@ const MyProfile = () => {
                     </Link>
                 </div>
             </div>
-            <div>
+            <div className='flex-initial min-h-screen bg-black'>
+                <div>
+                    <h1 className="py-6 text-center text-3xl">
+                        Active Rents
+                    </h1>
+                    <Rents account={true}/>
+                </div>
+                <div>
                 <h1 className="py-6 text-center text-3xl">
-                    Active Rents
-                </h1>
-                <Rents account={true}/>
-            </div>
-            <div>
-            <h1 className="py-6 text-center text-3xl">
-                    Active Offers
-                </h1>
-                <OffersComp profile={true}/>
+                        Active Offers
+                    </h1>
+                    <OffersComp profile={true}/>
+                </div>
             </div>
             <div>
                 <Footer/>
