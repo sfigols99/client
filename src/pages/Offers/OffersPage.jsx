@@ -10,16 +10,11 @@ const OffersPage = (props) => {
             <div>
                 <div>
                     <h1 className="py-6 text-center text-3xl">
-                        {
-                            (props.is_tenant) ?
-                                <span>Tenant Offers</span>
-                            :
-                                <span>Landlord Offers</span>
-                        }             
+                        Offers           
                     </h1>
                 </div>
                 <div className='flex-initial min-h-screen'>
-                    <OffersComp is_tenant={props.is_tenant} profile={false}/>
+                    <OffersComp profile={false}/>
                 </div>
             </div>
             <div>

@@ -27,10 +27,10 @@ const AddPersona = (props) => {
     const add_persona = (e) => {
         e.preventDefault();
         if(props.is_persona_fisica) {
-            set_persona_fisica(props.account, pfValues.dni, pfValues.nom, pfValues.location, pfValues.email)
+            set_persona_fisica(pfValues.dni, pfValues.nom, pfValues.location, pfValues.email)
         }
         else {
-            set_persona_juridica(props.account, pjValues.nif, pjValues.den_social, pjValues.location, pjValues.den_con, pjValues.admin);
+            set_persona_juridica(pjValues.nif, pjValues.den_social, pjValues.location, pjValues.den_con, pjValues.admin);
         }
         nav("/");
     }

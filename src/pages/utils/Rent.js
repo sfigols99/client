@@ -1,5 +1,5 @@
 import { load } from "./Auth";
-import { contract_instance } from "./config";
+import { contract_instance, signer } from "./config";
 
 ////// Gets
 
@@ -8,7 +8,7 @@ const get_rent = async(id) => {
     try {
         rent = await contract_instance.get_rent(id);
     } catch (error){
-        console.log(error.reason);  
+        // console.log(error.reason);  
     }
     return(rent);
 }
@@ -33,7 +33,6 @@ export const unset_timestamp = (timestamp, unit) => {
     else if (unit === "MONTHS") {
         days = time.getMonth();
     }
-
     return days;
 }
 
@@ -42,9 +41,8 @@ export const get_rent_params = async(id) => {
 
     const frequency = unset_timestamp(rent["2"].toNumber(), "DAYS");
     const last_payment = new Date(rent["3"].toNumber() * 1000).toString().slice(0,15);
-    const contract_end = unset_timestamp(rent["4"].toNumber(), "MONTHS")
-    const extension = unset_timestamp(rent["7"].toNumber(), "MONTHS")
-
+    const contract_end = unset_timestamp(rent["5"].toNumber(), "MONTHS")
+    const extension = unset_timestamp(rent["8"].toNumber(), "MONTHS")
 
     return{
         tenant: rent["1"],
@@ -52,14 +50,15 @@ export const get_rent_params = async(id) => {
         frequency: frequency,
         last_payment: last_payment, // De data a timestamp
         contract_end: contract_end, // De data a timestamp
-        amount: rent["5"].toNumber(),
-        state: rent["6"],
+        amount: rent["6"].toNumber(),
+        state: rent["7"],
         extension: extension, // Com amb freqüencia però obtenir dies totals (definim màxim mig any) Finalitat igual que freqüencia
-        surety: rent["9"].toNumber()
+        surety: rent["10"].toNumber(),
+        registre_cadastral: rent["11"]
     }
 } 
 
-export const get_rents = async(all_accounts) => {
+export const get_rents = async() => {
     const rent_count = await get_rent_count();
 
     const rents = [];
@@ -68,54 +67,50 @@ export const get_rents = async(all_accounts) => {
 
     const account = await load();
 
-    if(all_accounts === false) {
-        for (let i = 0; i < rent_count; i++) {
-            aux_rent = await get_rent(i);
-            if(aux_rent["6"] != 4) {
-                rents.push({
-                    id_rent: i,
-                    tenant: aux_rent["1"],
-                    landlord: aux_rent["0"],
-                    frequency: aux_rent["2"].toNumber(),
-                    last_payment: aux_rent["3"].toNumber(),
-                    contract_end: aux_rent["4"].toNumber(),
-                    amount: aux_rent["5"].toNumber(),
-                    state: aux_rent["6"],
-                    extension: aux_rent["7"].toNumber(),
-                    surety: aux_rent["9"].toNumber(),
-                })
-            }
-        }
-    } else {
-        for (let i = 0; i < rent_count; i++) {
+    for (let i = 0; i < rent_count; i++) {        
+        try {
             aux_rent = await get_rent(i); // Arreglar!!!! lower case -> No cal! És un format acceptat (es veu que si hi ha majuscules es que s'hi ha aplicat un checksum)
+            
             if((aux_rent["1"].toLowerCase() === account || aux_rent["0"].toLowerCase() === account.toLowerCase()) && aux_rent["6"] != 4) {
                 rents.push({
                     id_rent: i,
-                    tenant: aux_rent["1"],
-                    landlord: aux_rent["0"],
-                    frequency: aux_rent["2"].toNumber(),
+                    tenant: aux_rent["1"], 
+                    landlord: aux_rent["0"], 
+                    frequency: aux_rent["2"].toNumber(), 
                     last_payment: aux_rent["3"].toNumber(),
-                    contract_end: aux_rent["4"].toNumber(),
-                    amount: aux_rent["5"].toNumber(),
-                    state: aux_rent["6"],
-                    extension: aux_rent["7"].toNumber(),
-                    surety: aux_rent["9"].toNumber(),
+                    contract_started: aux_rent["4"].toNumber(),
+                    contract_end: aux_rent["5"].toNumber(),
+                    amount: aux_rent["6"].toNumber(),
+                    state: aux_rent["7"], 
+                    extension: aux_rent["8"].toNumber(),
+                    surety: aux_rent["10"].toNumber(),
                 })
-            }
+            } 
+        } catch(error) {
+            console.log(error.reason);
         }
     }
-    
-
     return(rents);
 }
 
 //// Rent functions
 
 export const pay_rent = async(id_rent, message) => {
-    // Do transfer with ethers js and Metamask
-    try {
+    const rent = await get_rent(id_rent);    
+    
+    const tx = {
+        from: rent["1"],
+        to: rent["0"],
+        value: (rent["6"].toNumber() * (10**15)),
+    }
 
+    console.log(rent["6"].toNumber())
+
+    const transaction = await signer.sendTransaction(tx);
+
+    transaction();
+
+    try {
         await contract_instance.pay_rent(id_rent, message);
     } catch(error) {
         console.log(error);
@@ -123,7 +118,20 @@ export const pay_rent = async(id_rent, message) => {
 }
 
 export const pay_surety = async(id_rent, message) => {
-    // Do transfer with ethers js and Metamask
+    const rent = await get_rent(id_rent);    
+    
+    const tx = {
+        from: rent["1"],
+        to: rent["0"],
+        value: (rent["6"].toNumber() * (10**15)),
+    }
+
+    console.log(rent["6"].toNumber())
+
+    const transaction = await signer.sendTransaction(tx);
+
+    transaction();
+
     try {
         await contract_instance.pay_surety(id_rent, message);
     } catch {

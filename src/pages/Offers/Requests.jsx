@@ -15,8 +15,8 @@ const Requests = () => {
         )   
     }
 
-    const handle_accept_request = (id) => {
-        accept_rent_request(id);
+    const handle_accept_request = async(id) => {
+        await accept_rent_request(id);
     }
     
     useEffect(() => {
@@ -28,19 +28,22 @@ const Requests = () => {
             <div>
                 <Navbar/>
             </div>
-            <h1 className="py-6 text-center text-3xl" >Requests</h1>
-            <ul className="px-24 py-8">
-                {
-                    requests && requests.map((item, index) => (
-                        <li key={index} className="flex justify-between p-4 border-t last:border-b">
-                            {item.address}
-                            <div>
-                                <Button text="Accept Request" onClick={() => handle_accept_request(item.id_request)}/>
-                            </div>
-                        </li>
-                    ))
-                }
-            </ul>
+            <div className="flex-initial min-h-screen">
+                <h1 className="py-6 text-center text-3xl" >Requests</h1>
+                <ul className="px-24 py-8">
+                    {
+                        requests && requests.map((item, index) => (
+                            <li key={index} className="flex justify-between p-4 border-t last:border-b">
+                                {item.address}
+                                <div>
+                                    <Button text="Accept Request" onClick={() => handle_accept_request(item.id_request)}/>
+                                </div>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+            
         </div>
     )
 }

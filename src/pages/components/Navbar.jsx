@@ -12,10 +12,8 @@ const NavbarItem = (props) => {
 
 const Navbar = () => {
     const navItems = [
-        {id: 1, name: "Landlords", path:'/landlords'},
-        {id: 2, name: "Tenants", path:'/tenants'},
-        {id: 3, name: "GRMNT's", path:'/grmnts'},
-        {id: 4, name: "My Profile", path:'/my_profile'}
+        {id: 1, name: "Offers", path:'/offers'},
+        {id: 2, name: "My Profile", path:'/my_profile'}
     ];
 
     return (

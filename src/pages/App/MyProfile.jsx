@@ -28,7 +28,7 @@ const MyProfile = () => {
                     <h1 className="py-6 text-center text-3xl">
                         Active Rents
                     </h1>
-                    <Rents account={true}/>
+                    <Rents/>
                 </div>
                 <div>
                 <h1 className="py-6 text-center text-3xl">

@@ -7,7 +7,7 @@ const Offer_Form = (props) => {
     let navigate = useNavigate();
 
     const [values, setValues] = useState({
-        is_tenant: "",
+        cadastral_registration: "",
         amount: "",
         frequency: "",
         extension: "",
@@ -17,7 +17,7 @@ const Offer_Form = (props) => {
     
     const add_offer = (e) => {
         e.preventDefault();
-        new_offer(values.is_tenant, parseInt(values.amount), parseInt(values.frequency), parseInt(values.extension), parseInt(values.contract_duration), parseInt(values.surety));
+        new_offer(parseInt(values.amount), parseInt(values.frequency), parseInt(values.extension), parseInt(values.contract_duration), parseInt(values.surety), values.cadastral_registration);
         // Wait metamask response
         navigate("/my_profile");
     }
@@ -25,12 +25,12 @@ const Offer_Form = (props) => {
     const offer_inputs = [
         {
             id:1,
-            name:"is_tenant",
-            type:"checkbox",
-            placeholder:"",
-            label:"Tenant",
-            value:"",
-            checked:true
+            name:"cadastral_registration",
+            type:"text",
+            placeholder:"9872023",
+            label:"Cadastral Registration",
+            disabled: false,
+            required: true,
         },
         {
             id:2,
@@ -89,17 +89,10 @@ const Offer_Form = (props) => {
     ];
 
     const onChange = (e) => {
-        if(e.target.type === "checkbox") {
-            setValues({
-                ...values,
-                [e.target.name]: e.target.checked
-            });            
-        } else {
-            setValues({
-                ...values,
-                [e.target.name]: e.target.value
-            });
-        }
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value
+        });
     }
 
     return (

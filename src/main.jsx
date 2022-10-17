@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import PrivateRoutes from './PrivateRoutes';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { App, OffersPage, GRMNTs, MyProfile, Requests, Rent, Login, Error, AddOffer, User} from './pages/pages';
+import { App, OffersPage, MyProfile, Requests, Rent, Login, Error, AddOffer, User} from './pages/pages';
 import './pages/index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -12,9 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App/>} />
           <Route path="login/:address" element={<Login/>} />
           <Route element={<PrivateRoutes/>}>
-            <Route path="tenants" element={<OffersPage is_tenant={true}/>} /> 
-            <Route path="landlords" element={<OffersPage is_tenant={false} />} />
-            <Route path="grmnts" element={<GRMNTs />} /> 
+            <Route path="offers" element={<OffersPage/>} /> 
             <Route path="my_profile" element={<MyProfile/>} />
             <Route path="requests/:id_offer" element={<Requests/>} />
             <Route path="rents/:id_rent" element={<Rent/>} />

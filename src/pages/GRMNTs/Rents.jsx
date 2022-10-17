@@ -9,7 +9,7 @@ const Rents = (props) => {
     const [loading, setLoading] = useState(true);
 
     const handle_rents = () => {
-        get_rents(props.account)
+        get_rents()
             .then(rents_items => setRents(rents_items))
                 .then(() => {
                     if(rents) {

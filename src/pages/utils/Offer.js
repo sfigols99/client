@@ -16,17 +16,18 @@ const set_timestamp = (num, unit) => {
     } else if (unit === "MONTHS") {
         date_zero.setMonth(date_zero.getMonth() + (num-1));
     }
-    
+    console.log(date_zero)
     const result = Math.floor(date_zero.getTime() / 1000);
     return(result);
 }
 
-export const new_offer = async(is_landlord, amount, frequency, extension, contract_instance_duration, surety)  => {    
+export const new_offer = async(amount, frequency, extension, contract_instance_duration, surety, cadastral_registration)  => {    
+    // console.log("HOLA")
     const f2tmstp = set_timestamp(frequency, "DAYS");
     const ext2tmstp = set_timestamp(extension, "MONTHS");
     const dur2tmstp = set_timestamp(contract_instance_duration, "MONTHS");
     try {
-        await contract_instance.new_offer(is_landlord, amount, f2tmstp, ext2tmstp, dur2tmstp, surety);
+        await contract_instance.new_offer(amount, f2tmstp, ext2tmstp, dur2tmstp, surety, cadastral_registration);
     } catch(error) {
         console.log(error.reason);
     }
@@ -42,12 +43,7 @@ export const pick_offer = async(offer_id) => {
 }
 
 export const accept_rent_request = async(request_id) => {
-    try {
-        await contract_instance.accept_rent_request(request_id);
-    } catch(error) {
-        console.log(error.reason);
-    }
-    
+    await contract_instance.accept_rent_request(request_id);   
 }
 
 const get_offer = async(value) => {
@@ -61,7 +57,7 @@ const get_offer = async(value) => {
     return(offer);
 }
 
-export const get_offers = async(display_tenant, profile) => {
+export const get_offers = async(profile) => {
     const count_offers = await get_count_offers();
     
     const offers = []
@@ -73,41 +69,22 @@ export const get_offers = async(display_tenant, profile) => {
     if(profile === false) {
         for(let i = 0; i < count_offers; i++) {
             aux_offer = await get_offer(i);           
-    
-            if (aux_offer["6"] == true) { // if the offer is not ACTIVE it is not added to the array
-                if (display_tenant === true) {
-                    if (aux_offer["1"] === true) {
-                        offers.push({
-                            id_offer: i,
-                            address: aux_offer["0"],
-                            is_tenant: aux_offer["1"],
-                            amount: aux_offer["2"].toNumber(),
-                            frequency: aux_offer["3"].toNumber(),
-                            extension: aux_offer["4"].toNumber(),
-                            contract_duration: aux_offer["5"].toNumber(),
-                            surety: aux_offer["7"].toNumber(),
-                        });
-                    }            
-                } else {
-                    if (aux_offer["1"] === false) {
-                        offers.push({
-                            id_offer: i,
-                            address: aux_offer["0"],
-                            is_tenant: aux_offer["1"],
-                            amount: aux_offer["2"].toNumber(),
-                            frequency: aux_offer["3"].toNumber(),
-                            extension: aux_offer["4"].toNumber(),
-                            contract_duration: aux_offer["5"].toNumber(),
-                            surety: aux_offer["7"].toNumber(),
-                        });
-                    }      
-                } 
+            if (aux_offer["5"] == true) { // if the offer is not ACTIVE it is not added to the array
+                offers.push({
+                    id_offer: i,
+                    address: aux_offer["0"],
+                    amount: aux_offer["1"].toNumber(),
+                    frequency: aux_offer["2"].toNumber(),
+                    extension: aux_offer["3"].toNumber(),
+                    contract_duration: aux_offer["4"].toNumber(),
+                    surety: aux_offer["6"].toNumber(),
+                    registre_cadastral: aux_offer["7"]
+                });           
             }   
         }    
     } else if (profile === true) {        
         for(let i = 0; i < count_offers; i++) {
             const aux_offer = await get_offer(i);
-        
             /**
              * 
              * Comparem adreces passant-ho tot a lowercase(). La questió és que una
@@ -125,16 +102,16 @@ export const get_offers = async(display_tenant, profile) => {
              * 
              */
 
-            if (account === aux_offer["0"].toLowerCase() && aux_offer["6"]) {
+            if (account === aux_offer["0"].toLowerCase() && aux_offer["5"]) {
                 offers.push({
                     id_offer: i,
                     address: aux_offer["0"],
-                    is_tenant: aux_offer["1"],
-                    amount: aux_offer["2"].toNumber(),
-                    frequency: aux_offer["3"].toNumber(),
-                    extension: aux_offer["4"].toNumber(),
-                    contract_duration: aux_offer["5"].toNumber(),
-                    surety: aux_offer["7"].toNumber(),
+                    amount: aux_offer["1"].toNumber(),
+                    frequency: aux_offer["2"].toNumber(),
+                    extension: aux_offer["3"].toNumber(),
+                    contract_duration: aux_offer["4"].toNumber(),
+                    surety: aux_offer["6"].toNumber(),
+                    registre_cadastral: aux_offer["7"]
                 });
             } 
         }

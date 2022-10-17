@@ -43,7 +43,7 @@ export const up_correu = (correu) => {
 export const get_pfisica = async(address) => {
     let user;
     try {
-        user = await contract_instance.get_pfisica(address);
+        user = await contract_instance.get_pfisica(address, 0);
     } catch(error) {
         console.log(error.reason);
     }
@@ -88,7 +88,7 @@ export const del_pf = (address) => {
     }
 }
 
-export const is_persona_fisica = async(account) => {
-    const user_in_db = await contract_instance.is_persona_fisica(account);
+export const is_persona_fisica = (account) => {
+    const user_in_db =  contract_instance.is_persona_fisica(account);
     return(user_in_db);
 }

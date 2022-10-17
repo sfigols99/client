@@ -52,7 +52,7 @@ export const up_apoderat = (apoderat) => {
 export const get_pjuridica = async (address) => {
     let user;
     try {
-        user = await contract_instance.get_pjuridica(address);
+        user = await contract_instance.get_pjuridica(address, 0);
     } catch(error) {
         console.log(error.reason);
     }
