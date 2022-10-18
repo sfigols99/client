@@ -66,11 +66,10 @@ export const get_rents = async() => {
     let aux_rent;
 
     const account = await load();
-
+    
     for (let i = 0; i < rent_count; i++) {        
         try {
             aux_rent = await get_rent(i); // Arreglar!!!! lower case -> No cal! És un format acceptat (es veu que si hi ha majuscules es que s'hi ha aplicat un checksum)
-            
             if((aux_rent["1"].toLowerCase() === account || aux_rent["0"].toLowerCase() === account.toLowerCase()) && aux_rent["6"] != 4) {
                 rents.push({
                     id_rent: i,

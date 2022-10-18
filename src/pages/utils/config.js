@@ -11,7 +11,7 @@ try {
     console.log(error.reason);
 }
 
-const contract_address = "0xE3FA5c1d414ed544a00C7079BeBC99347e87105f";
+const contract_address = "0xEF4147F839d1b7cCab1aca56142D64445011e4Fb";
 
 export const contract_instance = new ethers.Contract(contract_address, abi.abi, signer);
 

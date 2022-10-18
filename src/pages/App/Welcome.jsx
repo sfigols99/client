@@ -42,10 +42,7 @@ const Welcome = (props) => {
         <div className="justify-center items-center">
             <div className="text-center">
                 <h1 className="py-12 text-7xl">Be smart</h1>
-                <h1 className="py-9 text-6xl">Fasten your   
-                    <a onMouseEnter={() => {setName(" Agreements")}} onMouseLeave={() => {setName(" GRMNT's")}}>
-                         GRMNT's
-                    </a>
+                <h1 className="py-9 text-6xl">Fasten your GRMNT's
                 </h1>
             </div>
             <div className='flex items-center justify-center py-20'>
